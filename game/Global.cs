@@ -34,6 +34,11 @@ namespace ldjam50
         /// </summary>
         public const Single PxPM = 100f;
 
+        /// <summary>
+        /// Distance from the screen edge player can move to
+        /// </summary>
+        public const Single ScreenBuffer = 10f;
+
         #endregion
 
         #region Actions

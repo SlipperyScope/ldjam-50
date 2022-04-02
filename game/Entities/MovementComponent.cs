@@ -11,14 +11,14 @@ namespace ldjam50.Entities
     public class MovementComponent : Node
     {
         #region Config
-        private const Single InterpSpeed = 0.1f;
+        public Vector2 InterpSpeed = new(0.1f, 0.1f);
         #endregion
 
         /// <summary>
         /// Movement speed in m/s
         /// </summary>
         [Export]
-        public Single MaxSpeed { get; set; } = 10f;
+        public Vector2 MaxSpeed { get; set; } = new(5f, 10f);
 
         /// <summary>
         /// Sets the direction of travel at max speed
@@ -34,8 +34,8 @@ namespace ldjam50.Entities
         /// </summary>
         public Vector2 TargetVelocity
         { 
-            get => _TargetVelocity; 
-            set => _TargetVelocity = value.Clamped(MaxSpeed); 
+            get => _TargetVelocity;
+            set => _TargetVelocity = new Vector2(Mathf.Clamp(value.x, -MaxSpeed.x, MaxSpeed.x), Mathf.Clamp(value.y, -MaxSpeed.y, MaxSpeed.y));
         }
         private Vector2 _TargetVelocity;
 
