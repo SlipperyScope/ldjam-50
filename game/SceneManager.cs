@@ -31,7 +31,7 @@ namespace ldjam50
         {
             { SceneID.MainMenu, "res://Menus/MainMenu.tscn" },
             { SceneID.AndrewScene, "res://Levels/AndrewLevel.tscn" },
-            { SceneID.AdamScene, "" },
+            { SceneID.AdamScene, "res://Levels/Adumb.tscn" },
             { SceneID.MichaelScene, "" },
         };
     }
