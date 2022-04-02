@@ -36,7 +36,7 @@ namespace ldjam50
         {
             Seconds += delta;
 
-            foreach( var notify in Notifies.Where(n => Seconds >= n.Time))
+            foreach( var notify in Notifies.Where(n => Seconds >= n.Time).ToList())
             {
                 notify.callback();
                 Notifies.Remove(notify);
