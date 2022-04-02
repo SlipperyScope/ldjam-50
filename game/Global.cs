@@ -32,7 +32,7 @@ namespace ldjam50
         /// <summary>
         /// Pixels per meter
         /// </summary>
-        public const Single PxPM = 36f;
+        public const Single PxPM = 100f;
 
         #endregion
 

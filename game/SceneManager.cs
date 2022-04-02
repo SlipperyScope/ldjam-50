@@ -29,12 +29,18 @@ namespace ldjam50
         /// </summary>
         public static readonly Dictionary<SceneID, String> SceneMap = new()
         {
-            {SceneID.MainMenu, "res://Menus/MainMenu.tscn" },
+            { SceneID.MainMenu, "res://Menus/MainMenu.tscn" },
+            { SceneID.AndrewScene, "res://Levels/AndrewLevel.tscn" },
+            { SceneID.AdamScene, "" },
+            { SceneID.MichaelScene, "" },
         };
     }
 
     public enum SceneID
     {
         MainMenu,
+        AndrewScene,
+        AdamScene,
+        MichaelScene
     }
 }

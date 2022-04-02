@@ -31,7 +31,6 @@ namespace ldjam50
         /// <summary>
         /// Process
         /// </summary>
-        /// <param name="delta"></param>
         public override void _Process(Single delta)
         {
             Seconds += delta;

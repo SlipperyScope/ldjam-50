@@ -13,6 +13,9 @@ namespace ldjam50.Menus
             GetNode<TextureButton>(ButtonContainerPath + "Instructions").Connect("pressed", this, nameof(Pressed), new Godot.Collections.Array { ButtonID.Instructions });
             GetNode<TextureButton>(ButtonContainerPath + "Credits").Connect("pressed", this, nameof(Pressed), new Godot.Collections.Array { ButtonID.Credits });
             GetNode<TextureButton>(ButtonContainerPath + "Exit").Connect("pressed", this, nameof(Pressed), new Godot.Collections.Array { ButtonID.Exit });
+            GetNode<Button>(ButtonContainerPath + "HBoxContainer/Andrew").Connect("pressed", this, nameof(Pressed), new Godot.Collections.Array { ButtonID.Andrew });
+            GetNode<Button>(ButtonContainerPath + "HBoxContainer/Adam").Connect("pressed", this, nameof(Pressed), new Godot.Collections.Array { ButtonID.Adam });
+            GetNode<Button>(ButtonContainerPath + "HBoxContainer/Michael").Connect("pressed", this, nameof(Pressed), new Godot.Collections.Array { ButtonID.Michael });
         }
 
         private void Pressed(ButtonID id)
@@ -34,6 +37,15 @@ namespace ldjam50.Menus
                 case ButtonID.Exit:
                     GetTree().Quit();
                     break;
+                case ButtonID.Andrew:
+                    Global.SceneManager.Scene = SceneID.AndrewScene;
+                    break;
+                case ButtonID.Adam:
+                    Global.SceneManager.Scene = SceneID.AdamScene;
+                    break;
+                case ButtonID.Michael:
+                    Global.SceneManager.Scene = SceneID.MichaelScene;
+                    break;
                 default:
                     GD.PushWarning($"Button {id} has not been implemented");
                     break;
@@ -46,6 +58,9 @@ namespace ldjam50.Menus
             Instructions,
             Credits,
             Exit,
+            Andrew,
+            Adam,
+            Michael,
         };
-    } 
+    }
 }

@@ -37,44 +37,46 @@ anchor_bottom = 1.0
 custom_styles/panel = SubResource( 4 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
-margin_right = 1372.0
-margin_bottom = 678.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
-margin_right = 1372.0
+margin_right = 1920.0
 margin_bottom = 262.0
 custom_constants/margin_top = 150
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/MarginContainer"]
 margin_top = 150.0
-margin_right = 1372.0
+margin_right = 1920.0
 margin_bottom = 262.0
 
 [node name="Title" type="TextureRect" parent="CanvasLayer/PanelContainer/VBoxContainer/MarginContainer/CenterContainer"]
-margin_right = 1372.0
+margin_left = 274.0
+margin_right = 1646.0
 margin_bottom = 112.0
 texture = ExtResource( 7 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
 margin_top = 266.0
-margin_right = 1372.0
-margin_bottom = 678.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
-margin_right = 532.0
-margin_bottom = 412.0
+margin_right = 806.0
+margin_bottom = 814.0
 size_flags_horizontal = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 536.0
-margin_right = 836.0
-margin_bottom = 412.0
+margin_left = 810.0
+margin_right = 1110.0
+margin_bottom = 814.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer"]
+margin_top = 189.0
 margin_right = 300.0
-margin_bottom = 412.0
+margin_bottom = 625.0
 custom_constants/separation = 4
 
 [node name="Start" type="TextureButton" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer/VBoxContainer"]
@@ -128,8 +130,34 @@ margin_right = 40.0
 margin_bottom = 40.0
 texture = ExtResource( 3 )
 
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 416.0
+margin_right = 300.0
+margin_bottom = 436.0
+size_flags_horizontal = 3
+
+[node name="Andrew" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_right = 97.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Andrew"
+
+[node name="Adam" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 101.0
+margin_right = 198.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Adam"
+
+[node name="Michael" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 202.0
+margin_right = 300.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Michael"
+
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 840.0
-margin_right = 1372.0
-margin_bottom = 412.0
+margin_left = 1114.0
+margin_right = 1920.0
+margin_bottom = 814.0
 size_flags_horizontal = 3
