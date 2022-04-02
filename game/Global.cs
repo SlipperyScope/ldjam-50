@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-namespace Ludum50
+namespace ldjam50
 {
     public class Global : Node
     {
@@ -47,9 +47,9 @@ namespace Ludum50
             { InputAction.Down, "Down" },
             { InputAction.Left, "Left" },
             { InputAction.Right, "Right" },
-            { InputAction.Jump, "Jump" },
-            { InputAction.Click, "Click" },
+            { InputAction.Space, "Space" },
             { InputAction.Use, "Use"},
+            { InputAction.Click, "Click" },
         };
 
         #endregion
@@ -64,7 +64,7 @@ namespace Ludum50
         Down,
         Left,
         Right,
-        Jump,
+        Space,
         Click,
         Use,
     }

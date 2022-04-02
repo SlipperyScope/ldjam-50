@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace Ludum50.Menus
+namespace ldjam50.Menus
 {
     public class MainMenu : Node2D
     {

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace Ludum50
+namespace ldjam50
 {
     public class Game : Node2D
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ludum50
+namespace ldjam50
 {
     public static class Extensions
     {

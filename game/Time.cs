@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ludum50
+namespace ldjam50
 {
     public class Time : Node
     {

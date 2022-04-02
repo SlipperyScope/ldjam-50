@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ludum50
+namespace ldjam50
 {
     public class PlayerController : Node
     {
@@ -26,7 +26,7 @@ namespace Ludum50
             if (Input.IsActionPressed(Global.InputActions[InputAction.Right])) input.x += 1f;
             InputVector = input;
 
-            Jump = Input.IsActionPressed(Global.InputActions[InputAction.Jump]);
+            Jump = Input.IsActionPressed(Global.InputActions[InputAction.Space]);
         }
     }
 }

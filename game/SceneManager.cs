@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Godot;
 
-namespace Ludum50
+namespace ldjam50
 {
     public class SceneManager : Node
     {
