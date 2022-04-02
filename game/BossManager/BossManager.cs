@@ -16,11 +16,18 @@ public interface IBossBehavior {
 
 public class BossManager : Node
 {
-    public IBossBehavior startingBehavior;
+    public IBossBehavior StartingBehavior;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        // Start the machine here. 
+        GD.Print("Starting manager");
+        StartingBehavior = new Wait();
+        StartingBehavior.Done += Next;
+        StartingBehavior.Start();
+    }
+
+    void Next(object sender, BossBehaviorDoneArgs e) {
+        GD.Print("In the next method wow ", e.Terminal);
     }
 }
