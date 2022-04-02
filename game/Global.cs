@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ldjam50
 {
-    public class Global : Node
+    public class Global : Node2D
     {
         public static Global Instance { get; private set; }
         public static Time Time { get; private set; }
