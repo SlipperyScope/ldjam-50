@@ -41,7 +41,7 @@ logs/
 *.suo
 *.user
 *.sln.docstates
-*.sln
+#*.sln
 *.vcxproj*
 
 # Build results
