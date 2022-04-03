@@ -11,6 +11,11 @@ namespace ldjam50.Entities
 
         public PlayerController Controller => _Controller ??= GetNode<PlayerController>("Controller") ?? throw new Exception("No controller found on hero");
         private PlayerController _Controller;
+        const String BulletScenePath = "res://Bullet.tscn";
+        public PackedScene BulletScene;
+
+        public float ShootCooldown = 0.5f;
+        private Boolean ShootAvailable = true;
 
         /// <summary>
         /// Enter Tree
@@ -23,6 +28,7 @@ namespace ldjam50.Entities
         public override void _Ready()
         {
             Movement.InterpSpeed = new(0.3f, 0.3f);
+            BulletScene = GD.Load<PackedScene>(BulletScenePath);
         }
 
         /// <summary>
@@ -54,6 +60,15 @@ namespace ldjam50.Entities
             }
 
             Movement.TargetDirection = input;
+
+            if (Controller.Shoot && ShootAvailable) {
+                ShootAvailable = false;
+                var bullet = BulletScene.Instance<Bullet>();
+                GetTree().Root.AddChild(bullet);
+                bullet.GlobalPosition = GlobalPosition;
+
+                Global.Time.AddNotify(ShootCooldown, () => { ShootAvailable = true; });
+            }
         }
     }
 }
