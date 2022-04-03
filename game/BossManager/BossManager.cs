@@ -88,13 +88,13 @@ public class BossPhase1Config : IBossBehaviorConfig {
         var boring = new BehaviorMapping("Boring", wait);
         var burst = new BehaviorMapping("Burst", wait);
         var downToUp = new BehaviorMapping("DownToUp", wait);
-        var spiral = new BehaviorMapping("Spiral", wait);
+        var spiral = new BehaviorMapping("Spiral", boring);
         var threeTwoThree = new BehaviorMapping("ThreeTwoThree", wait);
         var triple = new BehaviorMapping("Triple", wait);
         var shotgun = new BehaviorMapping("Shotgun", wait);
 
         // "Bootstrap" the config by setting edges in initial node
-        wait.NextEdges(boring);
+        wait.NextEdges(boring, spiral, shotgun);
         // wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple, shotgun);
         _Initial = wait;
     }
@@ -124,10 +124,11 @@ public class BossManager : Node {
     }
 
     void Next(object sender, BossBehaviorDoneArgs e) {
-        // ActiveBehavior = ActiveBehavior.AnyNext();
-        if (ActiveBehavior == Config.Initial) Iteration++;
+        ActiveBehavior = ActiveBehavior.AnyNext();
 
-        ActiveBehavior = ActiveBehavior.Next[Iteration % ActiveBehavior.Next.Count];
+        // if (ActiveBehavior == Config.Initial) Iteration++;
+        // ActiveBehavior = ActiveBehavior.Next[Iteration % ActiveBehavior.Next.Count];
+
         Run();
     }
 }
