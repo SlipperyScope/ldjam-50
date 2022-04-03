@@ -20,6 +20,9 @@ namespace ldjam50.TileBoss
 
     public class TileBoss : Node2D, IMovable
     {
+        public AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D") ?? throw new Exception("No audio player on tileboss");
+        private AudioStreamPlayer2D _AudioPlayer;
+
         public List<T> Guns<T>() where T : BossGun => Ship.GetChildren().ToList<T>();
 
         const Int32 Autotile = 0;
@@ -37,7 +40,7 @@ namespace ldjam50.TileBoss
 
         private readonly List<TileInfo> Info = new();
 
-        public Int32 Phase { get; private set; } = 0;
+        public Int32 Phase { get; private set; } = 1;
 
         private Time Time;
 
@@ -101,6 +104,7 @@ namespace ldjam50.TileBoss
             Ship.SetCellv(Vector2.Zero, CoreTile);
             BuildQueue.Remove(Vector2.Zero);
             Info.Add(new TileInfo(Vector2.Zero, TileType.Adam, 3f, () => Info.All(r => r.Type != TileType.Gun)));
+            AudioPlayer.Play();
 
             Time.AddNotify(1f, BuildNext);
         }
@@ -126,7 +130,7 @@ namespace ldjam50.TileBoss
 
             Ship.SetCellv(toAdd, Autotile);
             Ship.UpdateBitmaskArea(toAdd);
-
+            AudioPlayer.Play();
             var gun = GetMap(Phase).GetChildren().ToList<BossGun>().FirstOrDefault(g => Ship.WorldToMap(g.Position) == toAdd);
 
             if (gun is not null)

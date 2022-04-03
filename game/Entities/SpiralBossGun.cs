@@ -13,6 +13,8 @@ namespace ldjam50.Entities
             GetTree().Root.AddChild(bullet);
             bullet.Position = this.GlobalPosition;
             bullet.Velocity = direction * 700;
+
+            PlaySound();
         }
 
         public override void _Ready()
