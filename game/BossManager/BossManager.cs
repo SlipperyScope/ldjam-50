@@ -94,8 +94,7 @@ public class BossPhase1Config : IBossBehaviorConfig {
         var shotgun = new BehaviorMapping("Shotgun", wait);
 
         // "Bootstrap" the config by setting edges in initial node
-        wait.NextEdges(boring, spiral, shotgun);
-        // wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple, shotgun);
+        wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple, shotgun);
         _Initial = wait;
     }
 }

@@ -3,6 +3,7 @@ using System;
 using ldjam50;
 using System.Collections.Generic;
 using ldjam50.TileBoss;
+using ldjam50.Entities;
 
 public class DownToUpShoot : Node, IBossBehavior
 {
@@ -15,11 +16,14 @@ public class DownToUpShoot : Node, IBossBehavior
         var callbacks = new List<Time.TimeNotifyCallback>();
         foreach (var dir in Math.LerpAngle(count, Mathf.Pi/2, Mathf.Pi)) {
             callbacks.Add(() => {
-                Global.Time.QueueNotify(0.5f, new List<Time.TimeNotifyCallback>(){
-                    () => boss.Fire(dir),
-                    () => boss.Fire(dir),
-                    () => boss.Fire(dir),
-                });
+                var guns = boss.Guns<SpiralBossGun>();
+                foreach (var gun in guns) {
+                    Global.Time.QueueNotify(0.5f, new List<Time.TimeNotifyCallback>(){
+                        () => gun.Shoot(dir),
+                        () => gun.Shoot(dir),
+                        () => gun.Shoot(dir),
+                    });
+                }
             });
         }
 
