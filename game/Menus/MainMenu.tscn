@@ -6,7 +6,7 @@
 [ext_resource path="res://Art/Instructions.png" type="Texture" id=4]
 [ext_resource path="res://Art/Credits.png" type="Texture" id=5]
 [ext_resource path="res://Menus/MainMenu.cs" type="Script" id=6]
-[ext_resource path="res://Art/Title.png" type="Texture" id=7]
+[ext_resource path="res://Art/logo.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.25098, 0.25098, 0.254902, 1 )
@@ -42,22 +42,22 @@ margin_bottom = 1080.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
 margin_right = 1920.0
-margin_bottom = 262.0
-custom_constants/margin_top = 150
+margin_bottom = 340.0
+custom_constants/margin_top = 68
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/MarginContainer"]
-margin_top = 150.0
+margin_top = 68.0
 margin_right = 1920.0
-margin_bottom = 262.0
+margin_bottom = 340.0
 
 [node name="Title" type="TextureRect" parent="CanvasLayer/PanelContainer/VBoxContainer/MarginContainer/CenterContainer"]
-margin_left = 274.0
-margin_right = 1646.0
-margin_bottom = 112.0
+margin_left = 67.0
+margin_right = 1853.0
+margin_bottom = 272.0
 texture = ExtResource( 7 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
-margin_top = 266.0
+margin_top = 344.0
 margin_right = 1920.0
 margin_bottom = 1080.0
 size_flags_horizontal = 3
@@ -65,18 +65,18 @@ size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
 margin_right = 806.0
-margin_bottom = 814.0
+margin_bottom = 736.0
 size_flags_horizontal = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
 margin_left = 810.0
 margin_right = 1110.0
-margin_bottom = 814.0
+margin_bottom = 736.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer"]
-margin_top = 189.0
+margin_top = 150.0
 margin_right = 300.0
-margin_bottom = 625.0
+margin_bottom = 586.0
 custom_constants/separation = 4
 
 [node name="Start" type="TextureButton" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer/VBoxContainer"]
@@ -159,5 +159,5 @@ text = "Michael"
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
 margin_left = 1114.0
 margin_right = 1920.0
-margin_bottom = 814.0
+margin_bottom = 736.0
 size_flags_horizontal = 3
