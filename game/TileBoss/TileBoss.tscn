@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://TileBoss/BossTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://TileBoss/TileBoss.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Entities/BossController.cs" type="Script" id=4]
 [ext_resource path="res://Entities/GunMount.cs" type="Script" id=5]
 [ext_resource path="res://TileBoss/BossGun.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Entities/BasicBossGun.cs" type="Script" id=7]
 
 [node name="TileBoss" type="Node2D"]
 script = ExtResource( 2 )
@@ -26,6 +27,7 @@ tile_data = PoolIntArray( -1, 0, 131076, -65536, 0, 196609, 65534, 0, 196611, 65
 
 [node name="BossGun" parent="00" instance=ExtResource( 6 )]
 position = Vector2( -49, 19 )
+script = ExtResource( 7 )
 
 [node name="01" type="TileMap" parent="."]
 visible = false
