@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class bullet : Area2D
+public class Bullet : Area2D
 {
     public Vector2 Velocity {get; set;}
 

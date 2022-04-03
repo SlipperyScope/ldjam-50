@@ -24,7 +24,8 @@ public static class BossBehaviors {
 
     static Dictionary<string,Builder> Map = new Dictionary<string, Builder>(){
         { "Wait", () => new Wait() },
-        { "BoringShoot", () => new BoringShoot() }
+        { "BoringShoot", () => new BoringShoot() },
+        { "ThreeTwoThreeShoot", () => new ThreeTwoThreeShoot() }
     };
     public static IBossBehavior MakeA(string name) {
         if (!Map.ContainsKey(name)) throw new Exception($"Steve pls, there's no bulder for the name '{name}'.");
@@ -48,7 +49,7 @@ public class BehaviorMapping {
     }
     public BehaviorMapping Any(List<BehaviorMapping> behaviors) {
         if (behaviors.Count == 0) return null;
-        int idx = (int)GD.Randi() % behaviors.Count;
+        int idx = (int)(GD.Randi() % behaviors.Count);
         return behaviors[idx];
     }
     public BehaviorMapping AnyNext() {
@@ -62,6 +63,10 @@ public class BehaviorMapping {
     public override string ToString() {
         return $"BehaviorMapping ({Name})";
     }
+
+    public void NextEdges(params BehaviorMapping[] next) {
+        Next = new List<BehaviorMapping>(next);
+    }
 }
 
 public class BossPhase1Config : IBossBehaviorConfig {
@@ -73,9 +78,10 @@ public class BossPhase1Config : IBossBehaviorConfig {
     public BossPhase1Config() {
         var wait = new BehaviorMapping("Wait");
         var shoot = new BehaviorMapping("BoringShoot", wait);
+        var threeTwoThree = new BehaviorMapping("ThreeTwoThreeShoot", wait);
 
         // "Bootstrap" the config by setting edges in initial node
-        wait.Next.Add(shoot);
+        wait.NextEdges(shoot, threeTwoThree);
         _Initial = wait;
     }
 }
@@ -88,7 +94,7 @@ public class BossManager : Node {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        DaBoss = GetTree().Root.GetNode<Boss>("Game/Boss");
+        DaBoss = this.GetParent<Boss>();
         GD.Print("Starting manager");
 
         ActiveBehavior = Config.Initial;
