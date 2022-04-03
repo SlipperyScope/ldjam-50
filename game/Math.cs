@@ -16,4 +16,12 @@ public static class Math {
         }
         return angles;
     }
+
+    public static Vector2[] FanAngle(int count, float angle, float spread) {
+        if (count == 1) {
+            return new Vector2[]{ Vector2.Right.Rotated(angle) };
+        }
+
+        return LerpAngle(count, angle - spread / 2, angle + spread / 2);
+    }
 }

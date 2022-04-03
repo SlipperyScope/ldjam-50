@@ -31,6 +31,7 @@ public static class BossBehaviors {
         { "Spiral", () => new SpiralShoot() },
         { "ThreeTwoThree", () => new ThreeTwoThreeShoot() },
         { "Triple", () => new TripleShoot() },
+        { "Shotgun", () => new ShotgunShoot() },
     };
     public static IBossBehavior MakeA(string name) {
         if (!Map.ContainsKey(name)) throw new Exception($"Steve pls, there's no bulder for the name '{name}'.");
@@ -88,9 +89,10 @@ public class BossPhase1Config : IBossBehaviorConfig {
         var spiral = new BehaviorMapping("Spiral", wait);
         var threeTwoThree = new BehaviorMapping("ThreeTwoThree", wait);
         var triple = new BehaviorMapping("Triple", wait);
+        var shotgun = new BehaviorMapping("Shotgun", wait);
 
         // "Bootstrap" the config by setting edges in initial node
-        wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple);
+        wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple, shotgun);
         _Initial = wait;
     }
 }
