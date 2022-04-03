@@ -34,31 +34,28 @@ public static class BossBehaviors {
 
 public class BehaviorMapping {
     public string Name;
-    public BehaviorMapping[] Next;
-    public BehaviorMapping[] Interrupt;
-    public BehaviorMapping(string name, BehaviorMapping[] next, BehaviorMapping[] interrupt) {
+    public List<BehaviorMapping> Next;
+    public List<BehaviorMapping> Interrupt;
+    public BehaviorMapping(string name) {
         Name = name;
-        Next = next;
-        Interrupt = interrupt;
+        Next = new List<BehaviorMapping>();
+        Interrupt = new List<BehaviorMapping>();
     }
     public BehaviorMapping(string name, params BehaviorMapping[] next) {
         Name = name;
-        Next = next;
+        Next = new List<BehaviorMapping>(next);
+        Interrupt = new List<BehaviorMapping>();
     }
-    public BehaviorMapping Any(BehaviorMapping[] behaviors) {
-        var idx = GD.Randi() % behaviors.Length;
-        GD.Print($"Got index {idx} of {behaviors.Length}");
-        var behavior = behaviors[idx];
-        GD.Print($"Got behavior {behavior}");
-        return behavior;
-        // return behaviors[GD.Randi() % behaviors.Length];
+    public BehaviorMapping Any(List<BehaviorMapping> behaviors) {
+        if (behaviors.Count == 0) return null;
+        int idx = (int)GD.Randi() % behaviors.Count;
+        return behaviors[idx];
     }
     public BehaviorMapping AnyNext() {
         return Any(Next);
     }
 
     public BehaviorMapping AnyInterrupt() {
-        if (Interrupt is not null) return Any(Interrupt);
         return null;
     }
 
@@ -68,15 +65,19 @@ public class BehaviorMapping {
 }
 
 public class BossPhase1Config : IBossBehaviorConfig {
+    BehaviorMapping _Initial;
     public BehaviorMapping Initial {
-        get { GD.Print("yeah okay..."); GD.Print(BossPhase1Config.Wait); return BossPhase1Config.Wait; }
+        get { return _Initial; }
     }
-    public static BehaviorMapping Shoot = new BehaviorMapping("BoringShoot", BossPhase1Config.Wait);
-    public static BehaviorMapping Wait = new BehaviorMapping(
-        "Wait",
-        new BehaviorMapping[]{BossPhase1Config.Shoot},
-        new BehaviorMapping[]{BossPhase1Config.Shoot}
-    );
+
+    public BossPhase1Config() {
+        var wait = new BehaviorMapping("Wait");
+        var shoot = new BehaviorMapping("BoringShoot", wait);
+
+        // "Bootstrap" the config by setting edges in initial node
+        wait.Next.Add(shoot);
+        _Initial = wait;
+    }
 }
 
 public class BossManager : Node {
@@ -95,8 +96,6 @@ public class BossManager : Node {
     }
 
     void Run() {
-        GD.Print("pls");
-        GD.Print(ActiveBehavior);
         GD.Print($"Running a '{ActiveBehavior.Name}'");
         var behavior = BossBehaviors.MakeA(ActiveBehavior.Name);
         behavior.Done += Next;
