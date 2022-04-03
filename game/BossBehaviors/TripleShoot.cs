@@ -5,6 +5,7 @@ using ldjam50;
 public class TripleShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
+    public bool IsAvailable(Boss boss) => true;
 
     public void Start(Boss boss) {
         boss.Fire(Vector2.Left);

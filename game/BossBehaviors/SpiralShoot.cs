@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class SpiralShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
+    public bool IsAvailable(Boss boss) => true;
 
     public void Start(Boss boss) {
         var totalTime = 0.5f;

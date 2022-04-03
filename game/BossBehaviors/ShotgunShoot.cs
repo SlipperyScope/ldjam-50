@@ -5,6 +5,7 @@ using ldjam50;
 public class ShotgunShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
+    public bool IsAvailable(Boss boss) => true;
 
     public void Start(Boss boss) {
         // TODO: Replace random angle with player angle to player position

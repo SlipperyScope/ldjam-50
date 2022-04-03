@@ -13,6 +13,7 @@ public class BossBehaviorDoneArgs : EventArgs {
 
 public interface IBossBehavior {
     public void Start(Boss boss);
+    public bool IsAvailable(Boss boss);
     public event EventHandler<BossBehaviorDoneArgs> Done;
 }
 
