@@ -8,6 +8,6 @@ namespace ldjam50.Entities
 {
     public abstract class BossGun : Node2D
     {
-        public abstract void Shoot();
+        public abstract void Shoot(Vector2 dir);
     }
 }

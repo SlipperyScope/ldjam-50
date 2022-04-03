@@ -160,7 +160,7 @@ namespace ldjam50
         {
             List<T> list = new();
 
-            foreach (T item in array)
+            foreach (var item in array)
             {
                 if (item is T type)
                 {

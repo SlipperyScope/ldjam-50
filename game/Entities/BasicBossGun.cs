@@ -1,17 +1,23 @@
-﻿using System;
+﻿using Godot;
+using System;
 
 namespace ldjam50.Entities
 {
     public class BasicBossGun : BossGun
     {
-        public override void Shoot()
+        const String BulletScenePath = "res://Bullet.tscn";
+        public PackedScene BulletScene;
+        public override void Shoot(Vector2 direction)
         {
-            throw new NotImplementedException();
+            var bullet = BulletScene.Instance<Bullet>();
+            GetTree().Root.AddChild(bullet);
+            bullet.Position = this.GlobalPosition;
+            bullet.Velocity = direction * 700;
         }
 
         public override void _Ready()
         {
-            "Hi, am basic".Print();
+            BulletScene = GD.Load<PackedScene>(BulletScenePath);
         }
     }
 }

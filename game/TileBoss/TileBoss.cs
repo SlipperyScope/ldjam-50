@@ -20,8 +20,8 @@ namespace ldjam50.TileBoss
 
     public class TileBoss : Node2D, IMovable
     {
-        public List<T> Gun<T>() where T : BossGun => Ship.GetChildren().ToList<T>();
-        
+        public List<T> Guns<T>() where T : BossGun => Ship.GetChildren().ToList<T>();
+
         const Int32 Autotile = 0;
         const Int32 CoreTile = 1;
         const Single BuildSpeed = 0.0f;

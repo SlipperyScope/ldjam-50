@@ -10,7 +10,6 @@ public class Boss : Area2D, IMovable
     public override void _Ready()
     {
         BulletScene = GD.Load<PackedScene>(BulletScenePath);
-        
     }
 
     public void Fire(Vector2 direction)
