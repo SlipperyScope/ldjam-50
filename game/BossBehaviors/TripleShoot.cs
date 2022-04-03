@@ -7,8 +7,6 @@ public class TripleShoot : Node, IBossBehavior
     public event EventHandler<BossBehaviorDoneArgs> Done;
 
     public void Start(Boss boss) {
-        GD.Print("Shoot started");
-
         boss.Fire(Vector2.Left);
         boss.Fire(new Vector2(-1, -0.3f));
         boss.Fire(new Vector2(-1, 0.3f));

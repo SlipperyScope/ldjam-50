@@ -7,7 +7,16 @@ public class SpiralShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
 
-    private Vector2[] directions = {Vector2.Left, new Vector2(-1, -1).Normalized(), Vector2.Up, new Vector2(1, -1).Normalized(), Vector2.Right, new Vector2(1, 1).Normalized(), Vector2.Down, new Vector2(-1, 1).Normalized()};
+    private Vector2[] directions = {
+        Vector2.Left,
+        new Vector2(-1, -1).Normalized(),
+        Vector2.Up,
+        new Vector2(1, -1).Normalized(),
+        Vector2.Right,
+        new Vector2(1, 1).Normalized(),
+        Vector2.Down,
+        new Vector2(-1, 1).Normalized()
+    };
 
     public void Start(Boss boss) {
         var shots = 1;

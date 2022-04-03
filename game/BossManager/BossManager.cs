@@ -25,8 +25,12 @@ public static class BossBehaviors {
 
     static Dictionary<string,Builder> Map = new Dictionary<string, Builder>(){
         { "Wait", () => new Wait() },
-        { "BoringShoot", () => new BoringShoot() },
-        { "ThreeTwoThreeShoot", () => new ThreeTwoThreeShoot() }
+        { "Boring", () => new BoringShoot() },
+        { "Burst", () => new BurstShoot() },
+        { "DownToUp", () => new DownToUpShoot() },
+        { "Spiral", () => new SpiralShoot() },
+        { "ThreeTwoThree", () => new ThreeTwoThreeShoot() },
+        { "Triple", () => new TripleShoot() },
     };
     public static IBossBehavior MakeA(string name) {
         if (!Map.ContainsKey(name)) throw new Exception($"Steve pls, there's no bulder for the name '{name}'.");
@@ -78,12 +82,17 @@ public class BossPhase1Config : IBossBehaviorConfig {
 
     public BossPhase1Config() {
         var wait = new BehaviorMapping("Wait");
-        var shoot = new BehaviorMapping("BoringShoot", wait);
-        var threeTwoThree = new BehaviorMapping("ThreeTwoThreeShoot", wait);
+        var boring = new BehaviorMapping("Boring", wait);
+        var burst = new BehaviorMapping("Burst", wait);
+        var downToUp = new BehaviorMapping("DownToUp", wait);
+        var spiral = new BehaviorMapping("Spiral", wait);
+        var threeTwoThree = new BehaviorMapping("ThreeTwoThree", wait);
+        var triple = new BehaviorMapping("Triple", wait);
 
         // "Bootstrap" the config by setting edges in initial node
-        wait.NextEdges(shoot, threeTwoThree);
-        _Initial = wait;
+        // wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple);
+        wait.NextEdges(downToUp);
+        _Initial = downToUp;
     }
 }
 
@@ -91,6 +100,7 @@ public class BossManager : Node {
     public Boss DaBoss;
     public IBossBehaviorConfig Config = new BossPhase1Config();
     public BehaviorMapping ActiveBehavior;
+    public int Iteration = 0;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -110,9 +120,10 @@ public class BossManager : Node {
     }
 
     void Next(object sender, BossBehaviorDoneArgs e) {
-        GD.Print("In the next method wow ", e.Terminal);
+        // ActiveBehavior = ActiveBehavior.AnyNext();
+        if (ActiveBehavior == Config.Initial) Iteration++;
 
-        ActiveBehavior = ActiveBehavior.AnyNext();
+        ActiveBehavior = ActiveBehavior.Next[Iteration % ActiveBehavior.Next.Count];
         Run();
     }
 }
