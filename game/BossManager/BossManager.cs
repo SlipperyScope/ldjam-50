@@ -90,9 +90,8 @@ public class BossPhase1Config : IBossBehaviorConfig {
         var triple = new BehaviorMapping("Triple", wait);
 
         // "Bootstrap" the config by setting edges in initial node
-        // wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple);
-        wait.NextEdges(downToUp);
-        _Initial = downToUp;
+        wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple);
+        _Initial = wait;
     }
 }
 
