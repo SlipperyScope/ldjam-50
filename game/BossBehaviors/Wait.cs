@@ -9,7 +9,7 @@ public class Wait : Node, IBossBehavior
     public void Start(Boss boss) {
         GD.Print("Wait started");
         
-        Global.Time.AddNotify(2.0f, () => {
+        Global.Time.AddNotify(1.0f, () => {
             GD.Print("Time expired");
             Done(this, new BossBehaviorDoneArgs(true));
         });

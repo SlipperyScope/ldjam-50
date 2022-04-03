@@ -1,11 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Entities/MovementComponent.cs" type="Script" id=1]
 [ext_resource path="res://Entities/Boss.cs" type="Script" id=2]
 [ext_resource path="res://Art/sanic.png" type="Texture" id=3]
+[ext_resource path="res://BossManager/BossManager.tscn" type="PackedScene" id=4]
 
 [node name="Boss" type="Area2D"]
 script = ExtResource( 2 )
+
+[node name="BossManager" parent="." instance=ExtResource( 4 )]
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
