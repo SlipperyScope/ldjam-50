@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Art/sanic.png" type="Texture" id=1]
+[ext_resource path="res://Art/HeroWarship.png" type="Texture" id=1]
 [ext_resource path="res://Entities/MovementComponent.cs" type="Script" id=2]
 [ext_resource path="res://Entities/PlayerController.cs" type="Script" id=3]
 [ext_resource path="res://Entities/Hero.cs" type="Script" id=4]
@@ -20,7 +20,8 @@ script = ExtResource( 3 )
 script = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 65, -117.7, 65, -110.6, 82, -80.6, 82, -75.1, 71.2, -47.4, 123, -53.2, 123, -42.2, 125, -34.2, 125, 17.1, 87, 25.5, 87, 13.3, 82.1, -4.6, 82, 3.2, 57.9, 54.3, 70.1, 78, 117, 80.5, 117, 93.9, 104.8, 125, 45.3, 125, 20, 107.2, 20, 101.6, 14.4, 83.4, -24.6, 77.6, -53, 95.5, -53, 99.3, -59.7, 125, -125, 125, -125, 83, -107.7, 81.5, -82.6, 53, -90, 53, -125, 46.2, -125, -23.1, -105.6, -36.6, -119, -42.4, -119, -50.1, -122, -82, -114.5, -82, -76.5, -125, 10.7, -125 )
+position = Vector2( -8, -7 )
+polygon = PoolVector2Array( 12, -18, 19, 5, 11, 25, -12, 35, -33, 22, -39, 6, -36, -20 )
 
 [node name="MovementComponent" type="Node" parent="."]
 script = ExtResource( 2 )
