@@ -1,15 +1,16 @@
 using Godot;
 using System;
 using ldjam50;
+using ldjam50.TileBoss;
 
 public class BoringShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
     // New
     // public bool IsAvailable(Boss boss) => boss.Guns<BasicBossGun>().Count > 0;
-    public bool IsAvailable(Boss boss) => true;
+    public bool IsAvailable(TileBoss boss) => true;
 
-    public void Start(Boss boss) {
+    public void Start(TileBoss boss) {
         // New
         // var guns = boss.Guns<BasicBossGun>();
         // foreach (var gun in guns) {

@@ -1,13 +1,14 @@
 using Godot;
 using System;
 using ldjam50;
+using ldjam50.TileBoss;
 
 public class ShotgunShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
-    public bool IsAvailable(Boss boss) => true;
+    public bool IsAvailable(TileBoss boss) => true;
 
-    public void Start(Boss boss) {
+    public void Start(TileBoss boss) {
         // TODO: Replace random angle with player angle to player position
         float ang = (float)GD.RandRange(Mathf.Pi / 2, Mathf.Pi / 2 * 3);
         var count = 10;

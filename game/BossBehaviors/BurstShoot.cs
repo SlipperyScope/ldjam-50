@@ -1,13 +1,14 @@
 using Godot;
 using System;
 using ldjam50;
+using ldjam50.TileBoss;
 
 public class BurstShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
-    public bool IsAvailable(Boss boss) => true;
+    public bool IsAvailable(TileBoss boss) => true;
 
-    public void Start(Boss boss) {
+    public void Start(TileBoss boss) {
         boss.Fire(Vector2.Left);
 
         Global.Time.AddNotify(0.15f, () => {

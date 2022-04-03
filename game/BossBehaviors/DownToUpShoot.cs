@@ -2,13 +2,14 @@ using Godot;
 using System;
 using ldjam50;
 using System.Collections.Generic;
+using ldjam50.TileBoss;
 
 public class DownToUpShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
-    public bool IsAvailable(Boss boss) => true;
+    public bool IsAvailable(TileBoss boss) => true;
 
-    public void Start(Boss boss) {
+    public void Start(TileBoss boss) {
         var delay = 0.1f;
         var count = 8;
         var callbacks = new List<Time.TimeNotifyCallback>();

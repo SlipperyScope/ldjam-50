@@ -26,6 +26,9 @@ namespace ldjam50.TileBoss
         const Int32 CoreTile = 1;
         const Single BuildSpeed = 0.0f;
 
+        [Obsolete]
+        public void Fire(Vector2 somethign) { }
+
         public TileMap Ship => _Ship ??= GetNode<TileMap>("Ship") ?? throw new Exception("Ship not found on tileboss");
         private TileMap _Ship;
 

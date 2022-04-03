@@ -1,5 +1,6 @@
 using Godot;
 using ldjam50;
+using ldjam50.TileBoss;
 using System;
 using System.Collections.Generic;
 
@@ -12,8 +13,8 @@ public class BossBehaviorDoneArgs : EventArgs {
 }
 
 public interface IBossBehavior {
-    public void Start(Boss boss);
-    public bool IsAvailable(Boss boss);
+    public void Start(TileBoss boss);
+    public bool IsAvailable(TileBoss boss);
     public event EventHandler<BossBehaviorDoneArgs> Done;
 }
 
@@ -99,7 +100,7 @@ public class BossPhase1Config : IBossBehaviorConfig {
 }
 
 public class BossManager : Node {
-    public Boss DaBoss;
+    public TileBoss DaBoss;
     public IBossBehaviorConfig Config = new BossPhase1Config();
     public BehaviorMapping ActiveBehavior;
     public int Iteration = 0;
@@ -107,7 +108,7 @@ public class BossManager : Node {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        DaBoss = this.GetParent<Boss>();
+        DaBoss = this.GetParent<TileBoss>();
         GD.Print("Starting manager");
 
         ActiveBehavior = Config.Initial;
