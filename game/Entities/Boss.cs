@@ -13,9 +13,11 @@ public class Boss : Area2D, IMovable
         
     }
 
-    public void Fire()
+    public void Fire(Vector2 direction)
     {
-        var bullet = BulletScene.Instance();
+        var bullet = BulletScene.Instance<Bullet>();
         GetTree().Root.AddChild(bullet);
+        bullet.Position = this.Position;
+        bullet.Velocity = direction * 700;
     }
 }
