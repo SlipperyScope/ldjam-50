@@ -7,22 +7,16 @@ public class SpiralShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
 
-    private Vector2[] directions = {Vector2.Left, new Vector2(-1, -1).Normalized(), Vector2.Up, new Vector2(1, -1).Normalized(), Vector2.Right, new Vector2(1, 1).Normalized(), Vector2.Down, new Vector2(-1, 1).Normalized()};
-
     public void Start(Boss boss) {
-        var shots = 1;
-        boss.Fire(directions[0]);
-        while (shots < 7)
-        {
-            var dir = directions[shots];
-            Global.Time.AddNotify(shots * 0.1f, () => {
-                boss.Fire(dir);
-            });
-            shots++;
+        var totalTime = 0.5f;
+        var count = 25;
+        var delay = totalTime / count;
+        var callbacks = new List<Time.TimeNotifyCallback>();
+        foreach (var dir in Math.LerpAngle(count, 0, Mathf.Pi * 2)) {
+            callbacks.Add(() => boss.Fire(dir));
         }
-        Global.Time.AddNotify(shots * 0.1f, () => {
-            boss.Fire(directions[shots]);
-            Done(this, new BossBehaviorDoneArgs(true));
-        });
+
+        Global.Time.QueueNotify(delay, callbacks);
+        Global.Time.AddNotify(totalTime, () => Done(this, new BossBehaviorDoneArgs()));
     }
 }

@@ -11,7 +11,7 @@ namespace ldjam50
     {
         public delegate void TimeNotifyCallback();
         private record TimeNotify(Single Created, Single Time, TimeNotifyCallback callback);
-        
+
         /// <summary>
         /// Number of seconds since game start
         /// </summary>
@@ -26,7 +26,18 @@ namespace ldjam50
         /// <param name="time">Time to notify</param>
         /// <param name="callback">Callback to invoke</param>
         /// <param name="relative">Time is relative to current time</param>
-        public void AddNotify(Single time, TimeNotifyCallback callback, Boolean relative = true) => Notifies.Add(new TimeNotify(Seconds, relative ? Seconds + time : time, callback));
+        public void AddNotify(Single time, TimeNotifyCallback callback, Boolean relative = true)
+        {
+            Notifies.Add(new TimeNotify(Seconds, relative ? Seconds + time : time, callback));
+        }
+
+        public void QueueNotify(Single time, IEnumerable<TimeNotifyCallback> callbacks) {
+            var wait = time;
+            foreach(var cb in callbacks) {
+                AddNotify(wait, cb);
+                wait += time;
+            }
+        }
 
         /// <summary>
         /// Process

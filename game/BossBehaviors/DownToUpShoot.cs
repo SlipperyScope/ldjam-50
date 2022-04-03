@@ -8,23 +8,21 @@ public class DownToUpShoot : Node, IBossBehavior
     public event EventHandler<BossBehaviorDoneArgs> Done;
 
     public void Start(Boss boss) {
-        var shots = 1;
-        boss.Fire(Vector2.Down);
-        GD.Print("shooting");
-        var baseRad = Mathf.Pi / 2;
-        while (shots < 7)
-        {
-            //+ Mathf.Pi / 2 is Left. Divide that shit up
-            var dir = new Vector2(Mathf.Cos(baseRad + (Mathf.Pi / 2)), Mathf.Sin(baseRad + (Mathf.Pi / 2)));
-            Global.Time.AddNotify(shots * 0.1f, () => {
-                boss.Fire(dir);
+        var delay = 0.1f;
+        var count = 8;
+        var callbacks = new List<Time.TimeNotifyCallback>();
+        foreach (var dir in Math.LerpAngle(count, Mathf.Pi/2, Mathf.Pi)) {
+            callbacks.Add(() => {
+                Global.Time.QueueNotify(0.5f, new List<Time.TimeNotifyCallback>(){
+                    () => boss.Fire(dir),
+                    () => boss.Fire(dir),
+                    () => boss.Fire(dir),
+                });
             });
-            shots++;
         }
-        Global.Time.AddNotify(shots * 0.1f, () => {
-            boss.Fire(Vector2.Left);
-            Done(this, new BossBehaviorDoneArgs(true));
-        });
+
+        Global.Time.QueueNotify(delay, callbacks);
+        Global.Time.AddNotify(delay * count + 0.5f * 3, () => Done(this, new BossBehaviorDoneArgs()));
     }
 }
 
