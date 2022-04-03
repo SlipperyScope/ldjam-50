@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using ldjam50;
 
 public class Bullet : Area2D
 {
@@ -16,5 +17,10 @@ public class Bullet : Area2D
     public override void _Process(float delta)
     {
         Position += Velocity * delta;
+        if (Position.x < Extensions.ScreenLeft(this) || Position.x > Extensions.ScreenRight(this)
+            || Position.y < Extensions.ScreenTop(this) || Position.y > Extensions.ScreenBottom(this))
+        {
+            QueueFree();
+        }
     }
 }

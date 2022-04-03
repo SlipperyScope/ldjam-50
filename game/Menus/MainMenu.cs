@@ -24,7 +24,7 @@ namespace ldjam50.Menus
             {
                 case ButtonID.Start:
                     "Start".Print();
-                    //Global.SceneManager.Scene = SceneID.
+                    Global.SceneManager.Scene = SceneID.BattleScene;
                     break;
                 case ButtonID.Instructions:
                     "Instructions".Print();

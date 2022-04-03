@@ -15,7 +15,7 @@ namespace ldjam50
         public Boolean Down => InputVector.y > 0f;
         public Boolean Left => InputVector.x < 0f;
         public Boolean Right => InputVector.x > 0f;
-        public Boolean Jump { get; private set; } = false;
+        public Boolean Shoot { get; private set; } = false;
 
         public override void _Process(Single delta)
         {
@@ -26,7 +26,7 @@ namespace ldjam50
             if (Input.IsActionPressed(Global.InputActions[InputAction.Right])) input.x += 1f;
             InputVector = input;
 
-            Jump = Input.IsActionPressed(Global.InputActions[InputAction.Space]);
+            Shoot = Input.IsActionPressed(Global.InputActions[InputAction.Space]);
         }
     }
 }
