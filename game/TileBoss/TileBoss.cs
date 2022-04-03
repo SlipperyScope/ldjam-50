@@ -10,6 +10,7 @@ namespace ldjam50.TileBoss
     public delegate Boolean CanHitQuery();
     public record TileInfo(Vector2 Position, TileType Type, Single HP, CanHitQuery CanHit);
 
+
     public enum TileType
     {
         Adam,
@@ -19,6 +20,8 @@ namespace ldjam50.TileBoss
 
     public class TileBoss : Node2D, IMovable
     {
+        public List<T> Gun<T>() where T : BossGun => Ship.GetChildren().ToList<T>();
+        
         const Int32 Autotile = 0;
         const Int32 CoreTile = 1;
         const Single BuildSpeed = 0.0f;
@@ -69,7 +72,7 @@ namespace ldjam50.TileBoss
                         Ship.UpdateBitmaskArea(tile);
                         if (info.Type == TileType.Gun)
                         {
-                            Ship.RemoveChild(Ship.GetChildren().ToList<GunMount>().First(g => Ship.WorldToMap(g.Position) == info.Position));
+                            Ship.RemoveChild(Ship.GetChildren().ToList<BossGun>().First(g => Ship.WorldToMap(g.Position) == info.Position));
                         }
                     }
                     else
@@ -121,7 +124,7 @@ namespace ldjam50.TileBoss
             Ship.SetCellv(toAdd, Autotile);
             Ship.UpdateBitmaskArea(toAdd);
 
-            var gun = GetMap(Phase).GetChildren().ToList<GunMount>().FirstOrDefault(g => Ship.WorldToMap(g.Position) == toAdd);
+            var gun = GetMap(Phase).GetChildren().ToList<BossGun>().FirstOrDefault(g => Ship.WorldToMap(g.Position) == toAdd);
 
             if (gun is not null)
             {

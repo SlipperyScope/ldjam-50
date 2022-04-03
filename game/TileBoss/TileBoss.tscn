@@ -5,7 +5,7 @@
 [ext_resource path="res://Entities/MovementComponent.cs" type="Script" id=3]
 [ext_resource path="res://Entities/BossController.cs" type="Script" id=4]
 [ext_resource path="res://Entities/GunMount.cs" type="Script" id=5]
-[ext_resource path="res://Entities/Gun.tscn" type="PackedScene" id=6]
+[ext_resource path="res://TileBoss/BossGun.tscn" type="PackedScene" id=6]
 
 [node name="TileBoss" type="Node2D"]
 script = ExtResource( 2 )
@@ -24,11 +24,8 @@ collision_mask = 0
 format = 1
 tile_data = PoolIntArray( -1, 0, 131076, -65536, 0, 196609, 65534, 0, 196611, 65535, 0, 65541, 0, 1, 0, 131071, 0, 131079, 65536, 0, 196609 )
 
-[node name="Position2D" type="Position2D" parent="00"]
-position = Vector2( -53, 18 )
-script = ExtResource( 5 )
-
-[node name="Gun" parent="00/Position2D" instance=ExtResource( 6 )]
+[node name="BossGun" parent="00" instance=ExtResource( 6 )]
+position = Vector2( -49, 19 )
 
 [node name="01" type="TileMap" parent="."]
 visible = false
