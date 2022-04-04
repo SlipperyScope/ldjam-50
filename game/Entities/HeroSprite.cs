@@ -69,14 +69,17 @@ namespace ldjam50.Entities
                 var bullet = BulletScene.Instance<Bullet>();
                 GetTree().Root.AddChild(bullet);
                 bullet.GlobalPosition = GlobalPosition;
+                bullet.FromPlayer = true;
 
                 Global.Time.AddNotify(ShootCooldown, () => { ShootAvailable = true; });
             }
         }
         private void OnAreaEntered(Area2D other) {
-            GD.Print("player hit: " + other);
+            if (other is Bullet && ((Bullet)other).FromPlayer) {
+                return;
+            }
             AudioPlayer.Play();
-
+            //take damage
         }
     }
 }

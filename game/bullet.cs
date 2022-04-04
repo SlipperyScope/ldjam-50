@@ -2,10 +2,12 @@ using Godot;
 using System;
 using ldjam50;
 using ldjam50.Entities;
+using ldjam50.TileBoss;
 
 public class Bullet : Area2D
 {
     public Vector2 Velocity {get; set;}
+    public Boolean FromPlayer{get; set;}
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -30,7 +32,7 @@ public class Bullet : Area2D
     }
 
     public void OnAreaEntered(Area2D other) {
-        if (other is HeroSprite) {
+        if ((!FromPlayer && other is HeroSprite) || (FromPlayer && other is TileBoss)) {
             QueueFree();
         }
     }
