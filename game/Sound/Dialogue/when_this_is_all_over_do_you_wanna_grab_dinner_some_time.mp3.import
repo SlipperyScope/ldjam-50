@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/when_this_is_all_over_do_you_wanna_grab_dinner_some_time.mp3-bc92d6fa9e751e7e2dbc9de89692f4f0.mp3str"
+
+[deps]
+
+source_file="res://Sound/Dialogue/when_this_is_all_over_do_you_wanna_grab_dinner_some_time.mp3"
+dest_files=[ "res://.import/when_this_is_all_over_do_you_wanna_grab_dinner_some_time.mp3-bc92d6fa9e751e7e2dbc9de89692f4f0.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

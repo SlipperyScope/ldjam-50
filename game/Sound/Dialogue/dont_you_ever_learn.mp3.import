@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/dont_you_ever_learn.mp3-cdc7b71b4c3c24b596cf7d8c065bcc62.mp3str"
+
+[deps]
+
+source_file="res://Sound/Dialogue/dont_you_ever_learn.mp3"
+dest_files=[ "res://.import/dont_you_ever_learn.mp3-cdc7b71b4c3c24b596cf7d8c065bcc62.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

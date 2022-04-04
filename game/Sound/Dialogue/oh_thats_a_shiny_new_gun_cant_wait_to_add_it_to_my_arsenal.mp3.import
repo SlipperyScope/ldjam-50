@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/oh_thats_a_shiny_new_gun_cant_wait_to_add_it_to_my_arsenal.mp3-377b8a8e741806ab6f7958260bbb4b16.mp3str"
+
+[deps]
+
+source_file="res://Sound/Dialogue/oh_thats_a_shiny_new_gun_cant_wait_to_add_it_to_my_arsenal.mp3"
+dest_files=[ "res://.import/oh_thats_a_shiny_new_gun_cant_wait_to_add_it_to_my_arsenal.mp3-377b8a8e741806ab6f7958260bbb4b16.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

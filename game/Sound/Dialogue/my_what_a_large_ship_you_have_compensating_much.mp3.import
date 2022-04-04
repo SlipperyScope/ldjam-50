@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/my_what_a_large_ship_you_have_compensating_much.mp3-0e0db84decc4ff34507d3636c2973b99.mp3str"
+
+[deps]
+
+source_file="res://Sound/Dialogue/my_what_a_large_ship_you_have_compensating_much.mp3"
+dest_files=[ "res://.import/my_what_a_large_ship_you_have_compensating_much.mp3-0e0db84decc4ff34507d3636c2973b99.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

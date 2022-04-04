@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/you_seem_nice_it_doesnt_have_to_be_this_way_you_know.mp3-4b75582f34aa51f557f38b5ef45607ca.mp3str"
+
+[deps]
+
+source_file="res://Sound/Dialogue/you_seem_nice_it_doesnt_have_to_be_this_way_you_know.mp3"
+dest_files=[ "res://.import/you_seem_nice_it_doesnt_have_to_be_this_way_you_know.mp3-4b75582f34aa51f557f38b5ef45607ca.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

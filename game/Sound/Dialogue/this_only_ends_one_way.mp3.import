@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/this_only_ends_one_way.mp3-a050c3499b7b2011c0cb38f7292cf8ee.mp3str"
+
+[deps]
+
+source_file="res://Sound/Dialogue/this_only_ends_one_way.mp3"
+dest_files=[ "res://.import/this_only_ends_one_way.mp3-a050c3499b7b2011c0cb38f7292cf8ee.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

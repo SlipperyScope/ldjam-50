@@ -20,6 +20,7 @@ script = ExtResource( 2 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 36, 36 )
 format = 1
+tile_data = PoolIntArray( 0, 1, 0 )
 
 [node name="00" type="TileMap" parent="."]
 visible = false

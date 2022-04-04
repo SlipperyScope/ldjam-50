@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/where_do_you_get_all_those_upgrades_anyway.mp3-cd124af0c1aa129e6f1f9c907f74e69f.mp3str"
+
+[deps]
+
+source_file="res://Sound/Dialogue/where_do_you_get_all_those_upgrades_anyway.mp3"
+dest_files=[ "res://.import/where_do_you_get_all_those_upgrades_anyway.mp3-cd124af0c1aa129e6f1f9c907f74e69f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

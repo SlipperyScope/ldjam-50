@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/honestly_I_fell_bad_for_you.mp3-f0e5a1eb09f7405562f99face47c18fc.mp3str"
+
+[deps]
+
+source_file="res://Sound/Dialogue/honestly_I_fell_bad_for_you.mp3"
+dest_files=[ "res://.import/honestly_I_fell_bad_for_you.mp3-f0e5a1eb09f7405562f99face47c18fc.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

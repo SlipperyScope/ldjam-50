@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/my_power_only_grows_stronger.mp3-f17421170c5fc399f30f54c52afdb385.mp3str"
+
+[deps]
+
+source_file="res://Sound/Dialogue/my_power_only_grows_stronger.mp3"
+dest_files=[ "res://.import/my_power_only_grows_stronger.mp3-f17421170c5fc399f30f54c52afdb385.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
