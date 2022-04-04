@@ -8,7 +8,7 @@ using ldjam50.Entities;
 public class DownToUpShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
-    public bool IsAvailable(TileBoss boss) => true;
+    public bool IsAvailable(TileBoss boss) => boss.Guns<SpiralBossGun>().Count > 0;
 
     public void Start(TileBoss boss) {
         var delay = 0.1f;

@@ -7,7 +7,7 @@ using ldjam50.Entities;
 public class ThreeTwoThreeShoot : Node, IBossBehavior
 {
     public event EventHandler<BossBehaviorDoneArgs> Done;
-    public bool IsAvailable(TileBoss boss) => true;
+    public bool IsAvailable(TileBoss boss) => boss.Guns<BasicBossGun>().Count > 0;
 
     public void Start(TileBoss boss) {
 

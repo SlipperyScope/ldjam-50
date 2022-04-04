@@ -13,9 +13,6 @@ namespace ldjam50.Entities
         public MovementComponent Movement => _Movement ??= GetNode<MovementComponent>("MovementComponent") ?? throw new Exception("No movement component on hero");
         private MovementComponent _Movement;
 
-        public AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>("Hit1Player") ?? throw new Exception("No audio player on Hero");
-        private AudioStreamPlayer2D _AudioPlayer;
-
         //public PlayerController Controller => _Controller ??= GetNode<PlayerController>("Controller") ?? throw new Exception("No controller found on hero");
         //private PlayerController _Controller;
 
@@ -24,7 +21,7 @@ namespace ldjam50.Entities
 
         public override void _EnterTree()
         {
-            Connect("area_entered", this, nameof(OnAreaEntered));
+            // Connect("area_entered", this, nameof(OnAreaEntered));
             //Rotation = Mathf.Pi * -0.5f;
         }
 
@@ -39,12 +36,6 @@ namespace ldjam50.Entities
             //Sprite.LookAt(Position + input);
             
             //Movement.TargetDirection = Controller.InputVector;
-        }
-
-        private void OnAreaEntered(Area2D other) {
-            GD.Print("hit: " + other);
-            AudioPlayer.Play();
-
         }
     }
 }
