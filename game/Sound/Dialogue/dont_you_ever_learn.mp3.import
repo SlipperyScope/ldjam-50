@@ -11,5 +11,5 @@ dest_files=[ "res://.import/dont_you_ever_learn.mp3-cdc7b71b4c3c24b596cf7d8c065b
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

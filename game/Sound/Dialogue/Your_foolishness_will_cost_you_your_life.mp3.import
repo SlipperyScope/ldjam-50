@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Your_foolishness_will_cost_you_your_life.mp3-187767a
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

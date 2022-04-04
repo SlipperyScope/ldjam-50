@@ -11,5 +11,5 @@ dest_files=[ "res://.import/where_do_you_get_all_those_upgrades_anyway.mp3-cd124
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

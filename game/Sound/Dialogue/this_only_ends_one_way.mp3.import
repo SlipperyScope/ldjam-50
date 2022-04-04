@@ -11,5 +11,5 @@ dest_files=[ "res://.import/this_only_ends_one_way.mp3-a050c3499b7b2011c0cb38f72
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

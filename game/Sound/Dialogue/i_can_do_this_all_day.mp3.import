@@ -11,5 +11,5 @@ dest_files=[ "res://.import/i_can_do_this_all_day.mp3-21841800588ec2234c3551dc62
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

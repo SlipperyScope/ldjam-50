@@ -11,5 +11,5 @@ dest_files=[ "res://.import/please_surrender.mp3-67db273165d3cb1fdbd4af61eec5a4e
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

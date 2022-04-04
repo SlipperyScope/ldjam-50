@@ -11,5 +11,5 @@ dest_files=[ "res://.import/my_what_a_large_ship_you_have_compensating_much.mp3-
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

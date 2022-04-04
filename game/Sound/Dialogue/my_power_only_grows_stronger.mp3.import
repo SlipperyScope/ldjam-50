@@ -11,5 +11,5 @@ dest_files=[ "res://.import/my_power_only_grows_stronger.mp3-f17421170c5fc399f30
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

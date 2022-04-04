@@ -11,5 +11,5 @@ dest_files=[ "res://.import/honestly_I_fell_bad_for_you.mp3-f0e5a1eb09f7405562f9
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

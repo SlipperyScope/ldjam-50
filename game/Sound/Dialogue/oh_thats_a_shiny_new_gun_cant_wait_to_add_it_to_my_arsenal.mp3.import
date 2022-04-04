@@ -11,5 +11,5 @@ dest_files=[ "res://.import/oh_thats_a_shiny_new_gun_cant_wait_to_add_it_to_my_a
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
