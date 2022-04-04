@@ -3,6 +3,7 @@ using ldjam50;
 using ldjam50.TileBoss;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class BossBehaviorDoneArgs : EventArgs {
     // Placeholder, may be useful, idk, stop asking questions
@@ -123,7 +124,14 @@ public class BossManager : Node {
     }
 
     void Next(object sender, BossBehaviorDoneArgs e) {
-        ActiveBehavior = ActiveBehavior.AnyNext();
+        var availableBehaviors = ActiveBehavior.Next.Where(m => {
+            var b = BossBehaviors.MakeA(m.Name);
+            return b.IsAvailable(DaBoss);
+        }).ToList();
+
+        // If no behavior is available (which is always true while a boss is 'loading' in)
+        // fallback to the initial state (which is probably Wait)
+        ActiveBehavior = ActiveBehavior.Any(availableBehaviors) ?? Config.Initial;
 
         // if (ActiveBehavior == Config.Initial) Iteration++;
         // ActiveBehavior = ActiveBehavior.Next[Iteration % ActiveBehavior.Next.Count];
