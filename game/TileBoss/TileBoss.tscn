@@ -75,21 +75,27 @@ tile_data = PoolIntArray( -327686, 0, 196611, -327685, 0, 196612, -327684, 0, 19
 
 [node name="SpiralBossGun" parent="03" instance=ExtResource( 6 )]
 position = Vector2( -54, 126 )
+Texture = null
 
 [node name="SpiralBossGun2" parent="03" instance=ExtResource( 6 )]
 position = Vector2( -54, -90 )
+Texture = null
 
 [node name="SpiralBossGun3" parent="03" instance=ExtResource( 6 )]
 position = Vector2( -54, 18 )
+Texture = null
 
 [node name="SpiralBossGun4" parent="03" instance=ExtResource( 6 )]
 position = Vector2( -18, -198 )
+Texture = null
 
 [node name="SpiralBossGun5" parent="03" instance=ExtResource( 6 )]
 position = Vector2( -18, 225 )
+Texture = null
 
 [node name="SpiralBossGun6" parent="03" instance=ExtResource( 6 )]
 position = Vector2( -162, 18 )
+Texture = null
 
 [node name="BasicBossGun" parent="03" instance=ExtResource( 5 )]
 position = Vector2( -198, -18 )

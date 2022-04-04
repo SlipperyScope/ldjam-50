@@ -28,6 +28,7 @@ public static class BossBehaviors {
 
     static Dictionary<string,Builder> Map = new Dictionary<string, Builder>(){
         { "Wait", () => new Wait() },
+        { "Move", () => new Move() },
         { "Boring", () => new BoringShoot() },
         { "Burst", () => new BurstShoot() },
         { "DownToUp", () => new DownToUpShoot() },
@@ -86,6 +87,7 @@ public class BossPhase1Config : IBossBehaviorConfig {
 
     public BossPhase1Config() {
         var wait = new BehaviorMapping("Wait");
+        var move = new BehaviorMapping("Move");
         var boring = new BehaviorMapping("Boring", wait);
         var burst = new BehaviorMapping("Burst", wait);
         var downToUp = new BehaviorMapping("DownToUp", wait);
@@ -95,7 +97,8 @@ public class BossPhase1Config : IBossBehaviorConfig {
         var shotgun = new BehaviorMapping("Shotgun", wait);
 
         // "Bootstrap" the config by setting edges in initial node
-        wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple, shotgun);
+        wait.NextEdges(boring, burst, downToUp, spiral, threeTwoThree, triple, shotgun, move, move, move, move, move);
+        move.NextEdges(wait, boring, burst, downToUp, spiral, threeTwoThree, triple, shotgun);
         _Initial = wait;
     }
 }

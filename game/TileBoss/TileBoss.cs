@@ -20,6 +20,8 @@ namespace ldjam50.TileBoss
 
     public class TileBoss : Node2D, IMovable
     {
+        public MovementComponent Movement => _Movement ??= GetNode<MovementComponent>("MovementComponent") ?? throw new Exception("No movement component on tileboss");
+        private MovementComponent _Movement;
         public AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D") ?? throw new Exception("No audio player on tileboss");
         private AudioStreamPlayer2D _AudioPlayer;
 
@@ -42,6 +44,8 @@ namespace ldjam50.TileBoss
 
         public Int32 Phase { get; private set; } = 2;
 
+        public Vector2 MoveDirection;
+
         private Time Time;
 
         /// <summary>
@@ -57,7 +61,34 @@ namespace ldjam50.TileBoss
         /// </summary>
         public override void _Ready()
         {
+            Movement.MaxSpeed = new Vector2(2, 2);
             BuildShip();
+        }
+
+        public override void _PhysicsProcess(Single delta)
+        {
+            if (MoveDirection != null && (MoveDirection.x != 0 || MoveDirection.y != 0)) {
+                var bounds = GetNode<TileMap>("Ship").GetUsedRect();
+
+                if (MoveDirection.x < 0f && GlobalPosition.x + bounds.Position.x * 36 < 925)
+                {
+                    MoveDirection.x = 0f;
+                }
+                if (MoveDirection.x > 0f && GlobalPosition.x + bounds.End.x * 100 > 1920 - 25)
+                {
+                    MoveDirection.x = 0f;
+                }
+                if (MoveDirection.y < 0f && GlobalPosition.y + bounds.Position.y * 36 < 0 + 30)
+                {
+                    MoveDirection.y = 0f;
+                }
+
+                if (MoveDirection.y > 0f && GlobalPosition.y + bounds.End.y * 36 > 1080 - 30)
+                {
+                    MoveDirection.y = 0f;
+                }
+            }
+            Movement.TargetDirection = MoveDirection;
         }
 
         /// <summary>

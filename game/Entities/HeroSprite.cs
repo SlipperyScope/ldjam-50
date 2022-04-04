@@ -81,6 +81,7 @@ namespace ldjam50.Entities
             Movement.TargetDirection = input;
 
             if (Controller.Shoot && ShootAvailable) {
+                // HornAudioPlayer.Play();
                 (HasHorn ? HornAudioPlayer : ShootAudioPlayer).Play();
                 ShootAvailable = false;
                 var bullet = BulletScene.Instance<Bullet>();
