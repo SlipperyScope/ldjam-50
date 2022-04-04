@@ -34,6 +34,7 @@ namespace ldjam50.Entities
         private Boolean HasHorn = false;
 
         public event EventHandler<OuchiesArgs> Ouchies;
+        public event EventHandler<EventArgs> Ded;
 
         /// <summary>
         /// Enter Tree
@@ -105,6 +106,7 @@ namespace ldjam50.Entities
             Health = Health - 1;
             if (Health == 0) {
                 // Death
+                Ded?.Invoke(this, new EventArgs());
             } else {
                 Ouchies?.Invoke(this, new OuchiesArgs(Health));
             }
