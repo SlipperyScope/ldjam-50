@@ -110,14 +110,12 @@ public class BossManager : Node {
     public override void _Ready()
     {
         DaBoss = this.GetParent<TileBoss>();
-        GD.Print("Starting manager");
 
         ActiveBehavior = Config.Initial;
         Global.Time.AddNotify(0f, Run);
     }
 
     void Run() {
-        GD.Print($"Running a '{ActiveBehavior.Name}'");
         var behavior = BossBehaviors.MakeA(ActiveBehavior.Name);
         behavior.Done += Next;
         behavior.Start(DaBoss);

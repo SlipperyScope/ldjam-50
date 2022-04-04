@@ -14,7 +14,6 @@ public class HealthBarAndOnlyThat : Node
     }
 
     void UpdateHealth(object sender, OuchiesArgs e) {
-        GD.Print($"Welp, ouch: {e.Health}");
         for (var i = 1; i <= 6; i++) {
             var rect = GetNode<ColorRect>($"h{i}");
             if (i < e.Health) rect.Visible = true;
