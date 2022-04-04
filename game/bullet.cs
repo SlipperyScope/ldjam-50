@@ -45,7 +45,8 @@ public class Bullet : Area2D
         switch(body)
         {
             case TileMap tilemap when tilemap.Name == "Ship" && FromPlayer is true:
-                tilemap.GetParent<TileBoss>().Collide(GlobalPosition + Velocity.Normalized() + Velocity.Normalized() * 10f/*collider radius*/, Damage);
+                tilemap.GetParent<TileBoss>().Collide(GlobalPosition + Velocity.Normalized(), Damage);
+                QueueFree();
                 break;
         }
     }
