@@ -137,7 +137,6 @@ namespace ldjam50.TileBoss
             Movement.MaxSpeed = new Vector2(2, 2);
             Dialogue = GetNode<Dialogue>(DialoguePath);
             Dialogue.PhaseShift += (object o, PhaseEventArgs e) => {
-                "What just happeend, lmao".Print();
                 Phase = e.Phase;
                 BuildShip();
                 // TODO: Disble guns while building/talking
