@@ -13,12 +13,11 @@ public class ShotgunShoot : Node, IBossBehavior
         var count = 10;
 
         var guns = boss.Guns<BasicBossGun>();
-        foreach (var gun in guns) {
-            // TODO: Replace random angle with player angle to player position
-            float ang = (float)GD.RandRange(Mathf.Pi / 2, Mathf.Pi / 2 * 3);
-            foreach (var dir in Math.FanAngle(count, ang, Mathf.Pi/4)) {
-                gun.Shoot(dir);
-            }
+        var gun = guns[(int)(GD.Randi() % guns.Count)];
+        // TODO: Replace random angle with player angle to player position
+        float ang = (float)GD.RandRange(Mathf.Pi / 2, Mathf.Pi / 2 * 3);
+        foreach (var dir in Math.FanAngle(count, ang, Mathf.Pi/4)) {
+            gun.Shoot(dir);
         }
 
 
