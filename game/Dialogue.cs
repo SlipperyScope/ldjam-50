@@ -26,6 +26,7 @@ public class DialogueLine {
 public class DialogueSequence {
     // Time to wait between audio clips
     public float Buffer = 0;
+    public int CurrentLine = 0;
 
     public List<DialogueLine> Lines;
     public DialogueSequence(List<DialogueLine> lines, float buffer = 0) {
@@ -48,17 +49,23 @@ public class Dialogue : Node
     Portrait Boss;
     HeroSprite HeroPlayer;
     TileBoss BossPlayer;
+    AudioStreamPlayer Audio;
 
     public event EventHandler<PhaseEventArgs> PhaseShift;
     public event EventHandler<EventArgs> PhaseShiftComplete;
 
     public List<DialogueSequence> DialogConfig;
+
+    // This is mostly for Godot
+    DialogueSequence ActiveSequence;
+
     public override void _Ready()
     {
         Hero = GetNode<Portrait>(HeroPath);
         Boss = GetNode<Portrait>(BossPath);
         HeroPlayer = GetNode<Hero>(HeroPlayerPath).GetNode<HeroSprite>("Area2D");
         BossPlayer = GetNode<TileBoss>(BossPlayerPath);
+        Audio = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 
         // Make sure the HeroSprite suspends pew pew
         HeroPlayer.SetUsUpTheDialogue(this);
@@ -72,11 +79,11 @@ public class Dialogue : Node
 
         DialogConfig = new(){
             new(new(){
-                new(Hero, "", "Hello, I am the hero of this space place"),
-                new(Boss, "", "If you are a hero then explain your ship"),
-                new(Hero, "", "Well it's a couple guns and an, um, big bridge"),
-                new(Boss, "", "Who made your bridge? Dyson, lmao"),
-                new(Hero, "", "Pathetic that you think that's insulting"),
+                new(Hero, "res://Sound/Dialogue/my_what_a_large_ship_you_have_compensating_much.mp3", "Hello, I am the hero of this space place"),
+                new(Boss, "res://Sound/Dialogue/Your_foolishness_will_cost_you_your_life.mp3", "If you are a hero then explain your ship"),
+                new(Hero, "res://Sound/Dialogue/i_can_do_this_all_day.mp3", "Well it's a couple guns and an, um, big bridge"),
+                new(Boss, "res://Sound/Dialogue/this_only_ends_one_way.mp3", "Who made your bridge? Dyson, lmao"),
+                // new(Hero, "", "Pathetic that you think that's insulting"),
             }),
             new(new() {
                 new(Boss, "", "But your ship is mostly a sphere, how could it be?"),
@@ -120,21 +127,34 @@ public class Dialogue : Node
     }
 
     void Play(DialogueSequence sequence) {
-        float delay = 0f;
+        sequence.CurrentLine = 0;
+        ActiveSequence = sequence;
+        PlayNext();
+    }
+
+    void PlayNext() {
         float fakeTextLength = 3f;
-        foreach (var line in sequence.Lines) {
-            Global.Time.AddNotify(delay, () => {
-                // Make the Speaker visible & populate textbox
-                line.Speaker.Say(line.Line);
-                // Play the audio clip
-                // lmao
-                // Wait for audio clip to finish + the buffer
-                Global.Time.AddNotify(fakeTextLength, () => line.Speaker.ExitStageLeft());
-            });
-            delay += fakeTextLength + sequence.Buffer;
-        }
-        Global.Time.AddNotify(delay, () => {
+
+        // Hide portraits, the speaker will unhide
+        Hero.ExitStageLeft();
+        Boss.ExitStageLeft();
+
+        if (ActiveSequence.CurrentLine >= ActiveSequence.Lines.Count) {
             PhaseShiftComplete?.Invoke(this, new EventArgs());
-        });
+            return;
+        }
+
+        var line = ActiveSequence.Lines[ActiveSequence.CurrentLine];
+        line.Speaker.Say(line.Line);
+        // Play the audio clip
+        if (line.AudioPath != "") {
+            var resource = GD.Load(line.AudioPath);
+            Audio.Stream = resource as AudioStream;
+            Audio.Connect("finished", this, nameof(PlayNext));
+            Audio.Play();
+        } else {
+            Global.Time.AddNotify(fakeTextLength, () => PlayNext());
+        }
+        ActiveSequence.CurrentLine++;
     }
 }

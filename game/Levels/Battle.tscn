@@ -164,6 +164,8 @@ margin_right = 1805.0
 margin_bottom = 149.0
 texture = ExtResource( 7 )
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer"]
+
 [node name="Hero" parent="." instance=ExtResource( 5 )]
 position = Vector2( 416, 541 )
 
