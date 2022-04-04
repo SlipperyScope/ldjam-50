@@ -3,11 +3,11 @@ using System;
 
 namespace ldjam50.Entities
 {
-    public class ShakeyCam : Camera2D
+    public class ShakeyCam : Node2D
     {
         private readonly Vector2 BaselinePower = new(10f, 10f);
         private readonly Vector2 BaselineSpeed = new(0.5f, 0.5f);
-        private const Single Snappiness = 0.1f;
+        private const Single Snappiness = 0.05f;
 
         private Vector2 TargetPower = Vector2.Zero;
         private Vector2 TargetSpeed = Vector2.Zero;
@@ -36,7 +36,7 @@ namespace ldjam50.Entities
             position.x = Power.x * Mathf.Cos(Time.Seconds * Speed.x);
             position.y = Power.y * Mathf.Sin(Time.Seconds * Speed.y);
 
-            Position = Position.LinearInterpolate(position, 0.5f);
+            Position = (Position - new Vector2(512f, 512f)).LinearInterpolate(position, 0.1f) + new Vector2(512f, 512f);
 
             Power = Power.LinearInterpolate(TargetPower, Snappiness);
             Speed = Speed.LinearInterpolate(TargetSpeed, Snappiness);
@@ -58,8 +58,8 @@ namespace ldjam50.Entities
 
         private void ModVars()
         {
-            TargetPower = BaselinePower + new Vector2(Rand(-5f, 5f), Rand(-5f, 5f));
-            TargetSpeed = BaselineSpeed + new Vector2(Rand(-0.05f, 0.05f), Rand(-0.05f, 0.05f));
+            TargetPower = BaselinePower + new Vector2(Rand(-1f, 1f), Rand(-1f, 1f));
+            TargetSpeed = BaselineSpeed + new Vector2(Rand(-0.02f, 0.02f), Rand(-0.02f, 0.02f));
             
             Time.AddNotify(3f, ModVars);
         }
