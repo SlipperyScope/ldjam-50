@@ -29,7 +29,6 @@ public class ShakeCam : Camera2D
     }
 
     public void Shake() {
-        GD.Print("shake");
         noiseY++;
         var amount = Mathf.Pow(Trauma, TraumaPower);
         Rotation = MaxRoll * amount * Noise.GetNoise2d(Noise.Seed, noiseY);
