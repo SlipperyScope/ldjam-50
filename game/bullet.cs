@@ -30,7 +30,7 @@ public class Bullet : Area2D
     }
 
     public void OnAreaEntered(Area2D other) {
-        if (other is Hero) {
+        if (other is HeroSprite) {
             QueueFree();
         }
     }

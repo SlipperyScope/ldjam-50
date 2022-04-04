@@ -4,13 +4,15 @@ using System;
 
 namespace ldjam50.Entities
 {
-    public class HeroSprite : Sprite, IMovable
+    public class HeroSprite : Area2D, IMovable
     {
         public MovementComponent Movement => _Movement ??= GetNode<MovementComponent>("MovementComponent") ?? throw new Exception("No movement component on hero");
         private MovementComponent _Movement;
 
         public PlayerController Controller => _Controller ??= GetNode<PlayerController>("Controller") ?? throw new Exception("No controller found on hero");
         private PlayerController _Controller;
+        public AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>("Hit1Player") ?? throw new Exception("No audio player on Hero");
+        private AudioStreamPlayer2D _AudioPlayer;
         const String BulletScenePath = "res://Bullet.tscn";
         public PackedScene BulletScene;
 
@@ -22,6 +24,7 @@ namespace ldjam50.Entities
         /// </summary>
         public override void _EnterTree()
         {
+            Connect("area_entered", this, nameof(OnAreaEntered));
             //Rotation = Mathf.Pi * -0.5f;
         }
 
@@ -40,7 +43,7 @@ namespace ldjam50.Entities
             var input = Controller.InputVector;
             var screenStart = GetParent<Node2D>().ToLocal(this.ScreenRect().Position);
             var screenEnd = GetParent<Node2D>().ToLocal(this.ScreenRect().End);
-            var bounds = GetRect();
+            var bounds = GetNode<Sprite>("Sprite").GetRect();
             var position = Position;
 
             if (input.x < 0f && position.x + bounds.Position.x < screenStart.x + Global.ScreenBuffer)
@@ -69,6 +72,11 @@ namespace ldjam50.Entities
 
                 Global.Time.AddNotify(ShootCooldown, () => { ShootAvailable = true; });
             }
+        }
+        private void OnAreaEntered(Area2D other) {
+            GD.Print("player hit: " + other);
+            AudioPlayer.Play();
+
         }
     }
 }
