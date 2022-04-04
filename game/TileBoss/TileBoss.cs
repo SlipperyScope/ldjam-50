@@ -140,10 +140,7 @@ namespace ldjam50.TileBoss
             Dialogue.PhaseShift += (object o, PhaseEventArgs e) => {
                 Phase = e.Phase;
                 BuildShip();
-                // TODO: Disble guns while building/talking
             };
-            // TODO: Enable guns with this event
-            // Dialogue.PhaseShiftComplete += MethodThatEnablesGuns;
         }
 
         public override void _PhysicsProcess(Single delta)
