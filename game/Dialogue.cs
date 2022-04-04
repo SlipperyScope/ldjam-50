@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ldjam50;
 using ldjam50.Entities;
+using ldjam50.TileBoss;
 
 public class PhaseEventArgs : EventArgs {
     public PhaseEventArgs(int phase) {
@@ -41,11 +42,12 @@ public class Dialogue : Node
     protected NodePath BossPath;
     [Export]
     protected NodePath HeroPlayerPath;
+    [Export]
+    protected NodePath BossPlayerPath;
     Portrait Hero;
     Portrait Boss;
     HeroSprite HeroPlayer;
-
-    int Phase = 0;
+    TileBoss BossPlayer;
 
     public event EventHandler<PhaseEventArgs> PhaseShift;
     public event EventHandler<EventArgs> PhaseShiftComplete;
@@ -56,6 +58,7 @@ public class Dialogue : Node
         Hero = GetNode<Portrait>(HeroPath);
         Boss = GetNode<Portrait>(BossPath);
         HeroPlayer = GetNode<Hero>(HeroPlayerPath).GetNode<HeroSprite>("Area2D");
+        BossPlayer = GetNode<TileBoss>(BossPlayerPath);
 
         // Make sure the HeroSprite suspends pew pew
         HeroPlayer.SetUsUpTheDialogue(this);
@@ -74,26 +77,42 @@ public class Dialogue : Node
                 new(Hero, "", "Well it's a couple guns and an, um, big bridge"),
                 new(Boss, "", "Who made your bridge? Dyson, lmao"),
                 new(Hero, "", "Pathetic that you think that's insulting"),
-                new(Boss, "", "Enough! Let's do battle"),
-                new(Hero, "", "*as Funky as Kirby as Link* hiyaaah!"),
             }),
             new(new() {
                 new(Boss, "", "But your ship is mostly a sphere, how could it be?"),
                 new(Hero, "", "Don't you see? I came to play ball"),
-            }, 100f)
+            }, 0.1f),
+            new(new() {
+                new(Hero, "", "Ha! I win again. Why don't you hit me with your best shot?"),
+                new(Boss, "", "Oh ho ho ho, I'll fire away."),
+            }, 0.1f),
+            new(new() {
+               new(Boss, "", "Nothing yet has mattered."),
+               new(Hero, "", "Heh, so you're not keeping score?"),
+               new(Boss, "", "You ignorant fool. Hubris will be your last mistake."),
+            }),
+            new(new() {
+                new(Boss, "", "But that was my final form!!! You shouldn't even be able to see this line"),
+                new(Hero, "", "But I am the alpha and omega. You cannot delay the inevitable"),
+                new(Hero, "", "Muahahaahahahaha"),
+            }, 0.1f),
         };
 
-        PhaseSequence(this, new EventArgs());
+        BossPlayer.PhaseComplete += PhaseSequence;
+
+        CallDeferred("StartEverything");
     }
 
-    void PhaseSequence(object sender, EventArgs e) {
-        // Determine dialogue sequence based on phase
-        Play(DialogConfig[Phase]);
+    void StartEverything() {
+        PhaseSequence(this, new PhaseCompleteEventArgs(){ Phase = 0 });
+    }
 
-        Phase++;
+    void PhaseSequence(object sender, PhaseCompleteEventArgs e) {
+        // Determine dialogue sequence based on phase
+        Play(DialogConfig[e.Phase]);
 
         // Tell the boss to start the next phase
-        PhaseShift?.Invoke(this, new PhaseEventArgs(Phase));
+        PhaseShift?.Invoke(this, new PhaseEventArgs(e.Phase));
     }
 
     void DeathSequence(object sender, EventArgs e) {

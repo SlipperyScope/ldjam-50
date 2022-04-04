@@ -27,6 +27,7 @@ script = ExtResource( 8 )
 HeroPath = NodePath("PortraitHero")
 BossPath = NodePath("PortraitBoss")
 HeroPlayerPath = NodePath("../Hero")
+BossPlayerPath = NodePath("../TileBoss")
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
 margin_left = 15.0
@@ -168,6 +169,7 @@ position = Vector2( 416, 541 )
 
 [node name="TileBoss" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1535, 529 )
+DialoguePath = NodePath("../CanvasLayer")
 
 [node name="BossManager" parent="TileBoss" instance=ExtResource( 1 )]
 
