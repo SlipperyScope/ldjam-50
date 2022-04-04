@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/HeroWarship.png-43d96ef673b92f175d07d373043426be.stex"
+path="res://.import/background.png-38a465a18a587fc5d74b79a7a6f7ddfd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/HeroWarship.png"
-dest_files=[ "res://.import/HeroWarship.png-43d96ef673b92f175d07d373043426be.stex" ]
+source_file="res://Art/victorart/background.png"
+dest_files=[ "res://.import/background.png-38a465a18a587fc5d74b79a7a6f7ddfd.stex" ]
 
 [params]
 

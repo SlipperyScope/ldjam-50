@@ -112,7 +112,7 @@ public class BossManager : Node {
         GD.Print("Starting manager");
 
         ActiveBehavior = Config.Initial;
-        Run();
+        Global.Time.AddNotify(0f, Run);
     }
 
     void Run() {
