@@ -10,7 +10,6 @@ namespace ldjam50.TileBoss
     public delegate Boolean CanHitQuery();
     public record TileInfo(Vector2 Position, TileType Type, Single HP, CanHitQuery CanHit);
 
-
     public enum TileType
     {
         Adam,
@@ -45,6 +44,36 @@ namespace ldjam50.TileBoss
         private Time Time;
 
         /// <summary>
+        /// Collide with tileboss
+        /// </summary>
+        /// <param name="position">Global position of collision</param>
+        /// <param name="damage">Amount of HP to remove</param>
+        public void Collide(Vector2 position, Single damage)
+        {
+            var tile = Ship.WorldToMap(Ship.ToLocal(position));
+            var info = Info.FirstOrDefault(i => i.Position == tile);
+
+            if (info is not null && info.CanHit())
+            {
+                if (info.HP - damage <= 0f)
+                {
+                    Ship.SetCellv(tile, TileMap.InvalidCell);
+                    Ship.UpdateBitmaskArea(tile);
+                    if (info.Type == TileType.Gun)
+                    {
+                        Ship.RemoveChild(Ship.GetChildren().ToList<BossGun>().First(g => Ship.WorldToMap(g.Position) == info.Position));
+                    }
+                }
+                else
+                {
+                    Info.Add(info with { HP = info.HP - 1f });
+                }
+
+                Info.Remove(info);
+            }
+        }
+
+        /// <summary>
         /// Enter Tree
         /// </summary>
         public override void _EnterTree()
@@ -60,36 +89,36 @@ namespace ldjam50.TileBoss
             BuildShip();
         }
 
-        /// <summary>
-        /// Input
-        /// </summary>
-        /// <param name="e"></param>
-        public override void _Input(InputEvent e)
-        {
-            if (e is InputEventMouseButton emb && emb.Pressed is true)
-            {
-                var tile = Ship.WorldToMap(Ship.ToLocal(GetGlobalMousePosition()));
-                var info = Info.FirstOrDefault(i => i.Position == tile);
-                if (info is not null && info.CanHit())
-                {
-                    if (info.HP - 1f == 0f)
-                    {
-                        Ship.SetCellv(tile, TileMap.InvalidCell);
-                        Ship.UpdateBitmaskArea(tile);
-                        if (info.Type == TileType.Gun)
-                        {
-                            Ship.RemoveChild(Ship.GetChildren().ToList<BossGun>().First(g => Ship.WorldToMap(g.Position) == info.Position));
-                        }
-                    }
-                    else
-                    {
-                        Info.Add(info with { HP = info.HP - 1f });
-                    }
+        ///// <summary>
+        ///// Input
+        ///// </summary>
+        ///// <param name="e"></param>
+        //public override void _Input(InputEvent e)
+        //{
+        //    if (e is InputEventMouseButton emb && emb.Pressed is true)
+        //    {
+        //        var tile = Ship.WorldToMap(Ship.ToLocal(GetGlobalMousePosition()));
+        //        var info = Info.FirstOrDefault(i => i.Position == tile);
+        //        if (info is not null && info.CanHit())
+        //        {
+        //            if (info.HP - 1f == 0f)
+        //            {
+        //                Ship.SetCellv(tile, TileMap.InvalidCell);
+        //                Ship.UpdateBitmaskArea(tile);
+        //                if (info.Type == TileType.Gun)
+        //                {
+        //                    Ship.RemoveChild(Ship.GetChildren().ToList<BossGun>().First(g => Ship.WorldToMap(g.Position) == info.Position));
+        //                }
+        //            }
+        //            else
+        //            {
+        //                Info.Add(info with { HP = info.HP - 1f });
+        //            }
 
-                    Info.Remove(info);
-                }
-            }
-        }
+        //            Info.Remove(info);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Builds the ship for the current phase
