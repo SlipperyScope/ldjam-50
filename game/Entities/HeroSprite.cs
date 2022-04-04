@@ -31,6 +31,7 @@ namespace ldjam50.Entities
         public int Health = 6;
         private int MaxHealth = 6;
         private Boolean ShootAvailable = true;
+        private Boolean GameScreenTurnOn = true;
         private Boolean HasHorn = false;
 
         public event EventHandler<OuchiesArgs> Ouchies;
@@ -49,6 +50,11 @@ namespace ldjam50.Entities
         {
             Movement.InterpSpeed = new(0.3f, 0.3f);
             BulletScene = GD.Load<PackedScene>(BulletScenePath);
+        }
+
+        public void SetUsUpTheDialogue(Dialogue dialogue) {
+            dialogue.PhaseShift += (object s, PhaseEventArgs e) => GameScreenTurnOn = false;
+            dialogue.PhaseShiftComplete += (object s, EventArgs e) => GameScreenTurnOn = true;
         }
 
         /// <summary>
@@ -81,8 +87,7 @@ namespace ldjam50.Entities
 
             Movement.TargetDirection = input;
 
-            if (Controller.Shoot && ShootAvailable) {
-                // HornAudioPlayer.Play();
+            if (Controller.Shoot && ShootAvailable && GameScreenTurnOn) {
                 (HasHorn ? HornAudioPlayer : ShootAudioPlayer).Play();
                 ShootAvailable = false;
                 var bullet = BulletScene.Instance<Bullet>();

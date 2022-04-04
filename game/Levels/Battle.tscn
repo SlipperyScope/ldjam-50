@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://BossManager/BossManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Art/MainCharIdle.png" type="Texture" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Entities/Hero.tscn" type="PackedScene" id=5]
 [ext_resource path="res://HealthBarAndOnlyThat.cs" type="Script" id=6]
 [ext_resource path="res://Art/BossCharIdle.png" type="Texture" id=7]
+[ext_resource path="res://Dialogue.cs" type="Script" id=8]
+[ext_resource path="res://Portrait.cs" type="Script" id=9]
 
 [sub_resource type="Theme" id=1]
 
@@ -21,6 +23,10 @@ scale = Vector2( 1.1595, 1.27046 )
 texture = ExtResource( 3 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource( 8 )
+HeroPath = NodePath("PortraitHero")
+BossPath = NodePath("PortraitBoss")
+HeroPlayerPath = NodePath("../Hero")
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
 margin_left = 15.0
@@ -88,7 +94,8 @@ margin_right = 195.0
 margin_bottom = -15.0
 color = Color( 0.764706, 0.12549, 0.12549, 1 )
 
-[node name="PortraitHero" type="Node" parent="CanvasLayer"]
+[node name="PortraitHero" type="Control" parent="CanvasLayer"]
+script = ExtResource( 9 )
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/PortraitHero"]
 margin_left = 5.0
@@ -121,7 +128,8 @@ rect_scale = Vector2( 2, 2 )
 theme = SubResource( 1 )
 text = "This is a test for Speakonia"
 
-[node name="PortraitBoss" type="Node" parent="CanvasLayer"]
+[node name="PortraitBoss" type="Control" parent="CanvasLayer"]
+script = ExtResource( 9 )
 
 [node name="ColorRect2" type="ColorRect" parent="CanvasLayer/PortraitBoss"]
 margin_left = 985.0
