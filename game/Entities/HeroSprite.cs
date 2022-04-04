@@ -4,6 +4,13 @@ using System;
 
 namespace ldjam50.Entities
 {
+    public class OuchiesArgs : EventArgs {
+        public OuchiesArgs(int health = 6) {
+            Health = health;
+        }
+
+        public int Health = 6;
+    }
     public class HeroSprite : Area2D, IMovable
     {
         public MovementComponent Movement => _Movement ??= GetNode<MovementComponent>("MovementComponent") ?? throw new Exception("No movement component on hero");
@@ -21,8 +28,12 @@ namespace ldjam50.Entities
         public PackedScene BulletScene;
 
         public float ShootCooldown = 0.5f;
+        public int Health = 6;
+        private int MaxHealth = 6;
         private Boolean ShootAvailable = true;
         private Boolean HasHorn = false;
+
+        public event EventHandler<OuchiesArgs> Ouchies;
 
         /// <summary>
         /// Enter Tree
@@ -88,8 +99,14 @@ namespace ldjam50.Entities
             if (other is Bullet && ((Bullet)other).FromPlayer) {
                 return;
             }
-            HitAudioPlayer.Play();
             //take damage
+            HitAudioPlayer.Play();
+            Health = Health - 1;
+            if (Health == 0) {
+                // Death
+            } else {
+                Ouchies?.Invoke(this, new OuchiesArgs(Health));
+            }
         }
     }
 }
