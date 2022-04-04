@@ -2,11 +2,11 @@
 
 [ext_resource path="res://TileBoss/BossGun.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/SpiralBossGun.cs" type="Script" id=2]
-[ext_resource path="res://Art/babby.png" type="Texture" id=3]
+[ext_resource path="res://Art/victorart/boss_ship_gun_alt.png" type="Texture" id=4]
 
 [node name="SpiralBossGun" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-Texture = ExtResource( 3 )
+Texture = ExtResource( 4 )
 
 [node name="Sprite" parent="." index="0"]
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )

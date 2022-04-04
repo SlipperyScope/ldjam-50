@@ -37,7 +37,8 @@ namespace ldjam50.Entities
 
         public override void _Ready()
         {
-            Sprite.Texture = Texture;
+            if (Sprite is not null && Texture is not null)
+                Sprite.Texture = Texture;
         }
 
         public virtual void Shoot(Vector2 direction)

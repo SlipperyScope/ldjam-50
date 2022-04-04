@@ -8,6 +8,13 @@ using System.Linq;
 namespace ldjam50.TileBoss
 {
     public delegate Boolean CanHitQuery();
+    public delegate void PhaseCompleteHandler(object sender, EventArgs e);
+
+    public class PhaseCompleteEventArgs : EventArgs
+    {
+        public Single Phase { get; init; }
+    }
+
     public record TileInfo(Vector2 Position, TileType Type, Single HP, CanHitQuery CanHit);
 
     public enum TileType
@@ -19,10 +26,22 @@ namespace ldjam50.TileBoss
 
     public class TileBoss : Node2D, IMovable
     {
-        public MovementComponent Movement => _Movement ??= GetNode<MovementComponent>("MovementComponent") ?? throw new Exception("No movement component on tileboss");
+        public event PhaseCompleteHandler PhaseComplete;
+
+        public MovementComponent Movement => _Movement ??= GetNode<MovementComponent>("MovementComponent");
         private MovementComponent _Movement;
-        public AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D") ?? throw new Exception("No audio player on tileboss");
+        public AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
         private AudioStreamPlayer2D _AudioPlayer;
+        public AudioStreamPlayer2D HitPlayer => _HitPlayer ??= GetNode<AudioStreamPlayer2D>("hitplayer");
+        private AudioStreamPlayer2D _HitPlayer;
+        public AudioStreamPlayer2D NoHitPlayer => _NoHitPlayer ??= GetNode<AudioStreamPlayer2D>("nohitplayer");
+        private AudioStreamPlayer2D _NoHitPlayer;
+        public AudioStreamPlayer2D BreakPlayer => _BreakPlayer ??= GetNode<AudioStreamPlayer2D>("breakplayer");
+        private AudioStreamPlayer2D _BreakPlayer;
+        public AudioStreamPlayer2D StartPlayer => _StartPlayer ??= GetNode<AudioStreamPlayer2D>("startplayer");
+        private AudioStreamPlayer2D _StartPlayer;
+        public AudioStreamPlayer2D BossKillPlayer => _BossKillPlayer ??= GetNode<AudioStreamPlayer2D>("bosskillplayer");
+        private AudioStreamPlayer2D _BossKillPlayer;
 
         public List<T> Guns<T>() where T : BossGun => Ship.GetChildren().ToList<T>();
 
@@ -41,7 +60,7 @@ namespace ldjam50.TileBoss
 
         private readonly List<TileInfo> Info = new();
 
-        public Int32 Phase { get; private set; } = 2;
+        public Int32 Phase { get; private set; } = 0;
 
         public Vector2 MoveDirection;
 
@@ -54,27 +73,47 @@ namespace ldjam50.TileBoss
         /// <param name="damage">Amount of HP to remove</param>
         public void Collide(Vector2 position, Single damage)
         {
+            if (Info.Count == 0) return;
             var tile = Info.OrderBy(i => (Ship.MapToWorld(i.Position) + new Vector2(18f, 18f)).DistanceSquaredTo(Ship.ToLocal(position))).First().Position;
 
             var info = Info.FirstOrDefault(i => i.Position == tile);
 
-            if (info is not null && info.CanHit())
+            if (info is null) return;
+
+            if (info.CanHit())
             {
                 if (info.HP - damage <= 0f)
                 {
-                    Ship.SetCellv(tile, TileMap.InvalidCell);
-                    Ship.UpdateBitmaskArea(tile);
-                    if (info.Type == TileType.Gun)
+                    if (info.Type == TileType.Adam)
                     {
-                        Ship.RemoveChild(Ship.GetChildren().ToList<BossGun>().First(g => Ship.WorldToMap(g.Position) == info.Position));
+                        "Killed adam".Print();
+                        BossKillPlayer.Play();
+                        Phase++;
+                        PhaseComplete?.Invoke(this, new PhaseCompleteEventArgs() { Phase = Phase });
+                        Time.AddNotify(5f, BuildShip);
+                    }
+                    else
+                    {
+                        BreakPlayer.Play();
+                        Ship.SetCellv(tile, TileMap.InvalidCell);
+                        Ship.UpdateBitmaskArea(tile);
+                        if (info.Type == TileType.Gun)
+                        {
+                            Ship.RemoveChild(Ship.GetChildren().ToList<BossGun>().First(g => Ship.WorldToMap(g.Position) == info.Position));
+                        }
                     }
                 }
                 else
                 {
+                    HitPlayer.Play();
                     Info.Add(info with { HP = info.HP - 1f });
                 }
 
                 Info.Remove(info);
+            }
+            else
+            {
+                NoHitPlayer.Play();
             }
         }
 
@@ -121,42 +160,13 @@ namespace ldjam50.TileBoss
             Movement.TargetDirection = MoveDirection;
         }
 
-        ///// <summary>
-        ///// Input
-        ///// </summary>
-        ///// <param name="e"></param>
-        //public override void _Input(InputEvent e)
-        //{
-        //    if (e is InputEventMouseButton emb && emb.Pressed is true)
-        //    {
-        //        var tile = Ship.WorldToMap(Ship.ToLocal(GetGlobalMousePosition()));
-        //        var info = Info.FirstOrDefault(i => i.Position == tile);
-        //        if (info is not null && info.CanHit())
-        //        {
-        //            if (info.HP - 1f == 0f)
-        //            {
-        //                Ship.SetCellv(tile, TileMap.InvalidCell);
-        //                Ship.UpdateBitmaskArea(tile);
-        //                if (info.Type == TileType.Gun)
-        //                {
-        //                    Ship.RemoveChild(Ship.GetChildren().ToList<BossGun>().First(g => Ship.WorldToMap(g.Position) == info.Position));
-        //                }
-        //            }
-        //            else
-        //            {
-        //                Info.Add(info with { HP = info.HP - 1f });
-        //            }
-
-        //            Info.Remove(info);
-        //        }
-        //    }
-        //}
-
         /// <summary>
         /// Builds the ship for the current phase
         /// </summary>
         public void BuildShip()
         {
+            StartPlayer.Play();
+            Ship.GetChildren().ToList().ForEach(c => c.QueueFree());
             Ship.Clear();
             Info.Clear();
 

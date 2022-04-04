@@ -17,7 +17,7 @@ public class ShakeCam : Camera2D
         Noise.Seed = (int)GD.Randi();
         Noise.Period = 4;
         Noise.Octaves = 2;
-        GD.Print("camera ready");
+        //GD.Print("camera ready");
     }
 
     public override void _Process(float delta)
@@ -29,7 +29,7 @@ public class ShakeCam : Camera2D
     }
 
     public void Shake() {
-        GD.Print("shake");
+        //GD.Print("shake");
         noiseY++;
         var amount = Mathf.Pow(Trauma, TraumaPower);
         Rotation = MaxRoll * amount * Noise.GetNoise2d(Noise.Seed, noiseY);
