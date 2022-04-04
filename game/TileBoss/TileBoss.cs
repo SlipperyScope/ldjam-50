@@ -25,7 +25,7 @@ namespace ldjam50.TileBoss
 
         public List<T> Guns<T>() where T : BossGun => Ship.GetChildren().ToList<T>();
 
-        const Int32 Autotile = 0;
+        const Int32 Autotile = 2;
         const Int32 CoreTile = 1;
         const Single BuildSpeed = 0.1f;
 
@@ -40,7 +40,7 @@ namespace ldjam50.TileBoss
 
         private readonly List<TileInfo> Info = new();
 
-        public Int32 Phase { get; private set; } = 3;
+        public Int32 Phase { get; private set; } = 2;
 
         private Time Time;
 
