@@ -13,6 +13,9 @@ public class ShotgunShoot : Node, IBossBehavior
         var count = 10;
 
         var guns = boss.Guns<BasicBossGun>();
+
+        if (guns.Count is 0) Done(this, new BossBehaviorDoneArgs());
+
         var gun = guns[(int)(GD.Randi() % guns.Count)];
         // TODO: Replace random angle with player angle to player position
         float ang = (float)GD.RandRange(Mathf.Pi / 2, Mathf.Pi / 2 * 3);
