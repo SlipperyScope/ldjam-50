@@ -11,13 +11,18 @@ namespace ldjam50.Entities
 
         public PlayerController Controller => _Controller ??= GetNode<PlayerController>("Controller") ?? throw new Exception("No controller found on hero");
         private PlayerController _Controller;
-        public AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>("Hit1Player") ?? throw new Exception("No audio player on Hero");
-        private AudioStreamPlayer2D _AudioPlayer;
+        public AudioStreamPlayer2D HitAudioPlayer => _HitAudioPlayer ??= GetNode<AudioStreamPlayer2D>("Hit1Player") ?? throw new Exception("No hit audio player on Hero");
+        private AudioStreamPlayer2D _HitAudioPlayer;
+        public AudioStreamPlayer2D ShootAudioPlayer => _ShootAudioPlayer ??= GetNode<AudioStreamPlayer2D>("PlayerShoot") ?? throw new Exception("No shoot audio player on Hero");
+        private AudioStreamPlayer2D _ShootAudioPlayer;
+        public AudioStreamPlayer2D HornAudioPlayer => _HornAudioPlayer ??= GetNode<AudioStreamPlayer2D>("HornPlayer") ?? throw new Exception("No horn audio player on Hero");
+        private AudioStreamPlayer2D _HornAudioPlayer;
         const String BulletScenePath = "res://Bullet.tscn";
         public PackedScene BulletScene;
 
         public float ShootCooldown = 0.5f;
         private Boolean ShootAvailable = true;
+        private Boolean HasHorn = false;
 
         /// <summary>
         /// Enter Tree
@@ -65,6 +70,7 @@ namespace ldjam50.Entities
             Movement.TargetDirection = input;
 
             if (Controller.Shoot && ShootAvailable) {
+                (HasHorn ? HornAudioPlayer : ShootAudioPlayer).Play();
                 ShootAvailable = false;
                 var bullet = BulletScene.Instance<Bullet>();
                 GetTree().Root.AddChild(bullet);
@@ -75,10 +81,14 @@ namespace ldjam50.Entities
             }
         }
         private void OnAreaEntered(Area2D other) {
+            if (other.Name == "SecretThing") {
+                HasHorn = true;
+                return;
+            }
             if (other is Bullet && ((Bullet)other).FromPlayer) {
                 return;
             }
-            AudioPlayer.Play();
+            HitAudioPlayer.Play();
             //take damage
         }
     }
