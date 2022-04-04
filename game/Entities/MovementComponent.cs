@@ -18,7 +18,7 @@ namespace ldjam50.Entities
         /// Movement speed in m/s
         /// </summary>
         [Export]
-        public Vector2 MaxSpeed { get; set; } = new(5f, 10f);
+        public Vector2 MaxSpeed { get; set; } = new(7f, 7f);
 
         /// <summary>
         /// Sets the direction of travel at max speed
