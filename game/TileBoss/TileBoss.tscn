@@ -133,6 +133,114 @@ position = Vector2( -198, 162 )
 [node name="BasicBossGun6" parent="03" instance=ExtResource( 5 )]
 position = Vector2( -198, 234 )
 
+[node name="04" type="TileMap" parent="."]
+visible = false
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 36, 36 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( -458755, 2, 196611, -458754, 2, 65540, -458753, 2, 196612, -524288, 2, 196612, -524287, 2, 65540, -524286, 2, 196609, -393218, 2, 196613, -458751, 2, 196613, -327682, 2, 196613, -393215, 2, 196613, -262146, 2, 196613, -327679, 2, 196613, -196610, 2, 196613, -262143, 2, 196613, -131075, 2, 196611, -131074, 2, 327683, -131073, 2, 0, -196608, 2, 0, -196607, 2, 65537, -65538, 2, 3, -65537, 2, 196615, -131072, 2, 196615, -131071, 2, 262145, -131070, 2, 0, -131069, 2, 0, -131068, 2, 0, -131067, 2, 0, -131066, 2, 0, -131065, 2, 0, -131064, 2, 0, -131063, 2, 131073, -2, 2, 3, -1, 2, 262146, -65536, 2, 2, -65535, 2, 262147, -65534, 2, 196615, -65533, 2, 196615, -65532, 2, 196615, -65531, 2, 196615, -65530, 2, 196615, -65529, 2, 196615, -65528, 2, 196615, -65527, 2, 1, 65534, 2, 3, 65535, 2, 1, 0, 1, 0, 1, 2, 3, 2, 2, 196615, 3, 2, 196615, 4, 2, 196615, 5, 2, 196615, 6, 2, 196615, 7, 2, 196615, 8, 2, 196615, 9, 2, 1, 131070, 2, 3, 131071, 2, 262145, 65536, 2, 0, 65537, 2, 262144, 65538, 2, 196615, 65539, 2, 196615, 65540, 2, 196615, 65541, 2, 196615, 65542, 2, 196615, 65543, 2, 196615, 65544, 2, 196615, 65545, 2, 1, 196606, 2, 3, 196607, 2, 196615, 131072, 2, 196615, 131073, 2, 262146, 131074, 2, 2, 131075, 2, 2, 131076, 2, 2, 131077, 2, 2, 131078, 2, 2, 131079, 2, 2, 131080, 2, 2, 131081, 2, 131074, 262142, 2, 3, 262143, 2, 196615, 196608, 2, 196615, 196609, 2, 1, 327677, 2, 196611, 327678, 2, 6, 327679, 2, 2, 262144, 2, 2, 262145, 2, 131074 )
+
+[node name="BasicBossGun" parent="04" instance=ExtResource( 5 )]
+position = Vector2( -90, -90 )
+
+[node name="BasicBossGun2" parent="04" instance=ExtResource( 5 )]
+position = Vector2( -90, 162 )
+
+[node name="SpiralBossGun" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, -270 )
+
+[node name="SpiralBossGun2" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, -198 )
+
+[node name="SpiralBossGun3" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 54, -198 )
+
+[node name="SpiralBossGun4" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 54, -270 )
+
+[node name="SpiralBossGun5" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 90, -18 )
+
+[node name="SpiralBossGun6" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 126, 18 )
+
+[node name="SpiralBossGun7" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 162, -18 )
+
+[node name="SpiralBossGun8" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 198, 18 )
+
+[node name="SpiralBossGun9" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 234, -18 )
+
+[node name="SpiralBossGun10" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 270, 18 )
+
+[node name="SpiralBossGun11" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 306, -18 )
+
+[node name="SpiralBossGun12" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 90, 54 )
+
+[node name="SpiralBossGun13" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 162, 54 )
+
+[node name="SpiralBossGun14" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 234, 54 )
+
+[node name="SpiralBossGun15" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 306, 54 )
+
+[node name="SpiralBossGun16" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -18, -54 )
+
+[node name="SpiralBossGun17" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 18, -54 )
+
+[node name="SpiralBossGun18" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, 54 )
+
+[node name="SpiralBossGun19" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, 18 )
+
+[node name="SpiralBossGun20" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, -18 )
+
+[node name="SpiralBossGun21" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, -54 )
+
+[node name="SpiralBossGun22" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -18, -90 )
+
+[node name="SpiralBossGun23" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 18, -90 )
+
+[node name="SpiralBossGun24" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, 90 )
+
+[node name="SpiralBossGun25" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, 126 )
+
+[node name="SpiralBossGun26" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -18, 90 )
+
+[node name="SpiralBossGun27" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 18, 126 )
+
+[node name="SpiralBossGun28" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 18, 63 )
+
+[node name="SpiralBossGun29" parent="04" instance=ExtResource( 6 )]
+position = Vector2( 54, 18 )
+
+[node name="SpiralBossGun30" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, -90 )
+
+[node name="SpiralBossGun31" parent="04" instance=ExtResource( 6 )]
+position = Vector2( -54, 162 )
+
 [node name="MovementComponent" type="Node" parent="."]
 script = ExtResource( 3 )
 
