@@ -8,11 +8,11 @@ using System.Linq;
 namespace ldjam50.TileBoss
 {
     public delegate Boolean CanHitQuery();
-    public delegate void PhaseCompleteHandler(object sender, EventArgs e);
+    public delegate void PhaseCompleteHandler(object sender, PhaseCompleteEventArgs e);
 
     public class PhaseCompleteEventArgs : EventArgs
     {
-        public Single Phase { get; init; }
+        public int Phase { get; init; }
     }
 
     public record TileInfo(Vector2 Position, TileType Type, Single HP, CanHitQuery CanHit);
@@ -28,6 +28,9 @@ namespace ldjam50.TileBoss
     {
         public event PhaseCompleteHandler PhaseComplete;
 
+        [Export]
+        protected NodePath DialoguePath;
+
         public MovementComponent Movement => _Movement ??= GetNode<MovementComponent>("MovementComponent");
         private MovementComponent _Movement;
         public AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
@@ -42,6 +45,7 @@ namespace ldjam50.TileBoss
         private AudioStreamPlayer2D _StartPlayer;
         public AudioStreamPlayer2D BossKillPlayer => _BossKillPlayer ??= GetNode<AudioStreamPlayer2D>("bosskillplayer");
         private AudioStreamPlayer2D _BossKillPlayer;
+        public Dialogue Dialogue;
 
         public List<T> Guns<T>() where T : BossGun => Ship.GetChildren().ToList<T>();
 
@@ -90,7 +94,7 @@ namespace ldjam50.TileBoss
                         BossKillPlayer.Play();
                         Phase++;
                         PhaseComplete?.Invoke(this, new PhaseCompleteEventArgs() { Phase = Phase });
-                        Time.AddNotify(5f, BuildShip);
+                        // Time.AddNotify(5f, BuildShip);
                     }
                     else
                     {
@@ -123,6 +127,8 @@ namespace ldjam50.TileBoss
         public override void _EnterTree()
         {
             Time = Global.Time;
+            // Game Jam
+            Dialogue = GetNode<Dialogue>(DialoguePath);
         }
 
         /// <summary>
@@ -131,7 +137,13 @@ namespace ldjam50.TileBoss
         public override void _Ready()
         {
             Movement.MaxSpeed = new Vector2(2, 2);
-            BuildShip();
+            Dialogue.PhaseShift += (object o, PhaseEventArgs e) => {
+                Phase = e.Phase;
+                BuildShip();
+                // TODO: Disble guns while building/talking
+            };
+            // TODO: Enable guns with this event
+            // Dialogue.PhaseShiftComplete += MethodThatEnablesGuns;
         }
 
         public override void _PhysicsProcess(Single delta)
