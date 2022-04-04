@@ -107,7 +107,9 @@ public class BossManager : Node {
     public TileBoss DaBoss;
     public IBossBehaviorConfig Config = new BossPhase1Config();
     public BehaviorMapping ActiveBehavior;
+    public BehaviorMapping QueuedBehavior;
     public int Iteration = 0;
+    bool IsPlaying = true;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -115,7 +117,22 @@ public class BossManager : Node {
         DaBoss = this.GetParent<TileBoss>();
 
         ActiveBehavior = Config.Initial;
+        DaBoss.Dialogue.PhaseShift += (_, _) => Pause();
+        DaBoss.Dialogue.PhaseShiftComplete += (_, _) => Play();
         Global.Time.AddNotify(0f, Run);
+    }
+
+    void Play() {
+        this.IsPlaying = true;
+        if (QueuedBehavior is not null) {
+            ActiveBehavior = QueuedBehavior;
+            QueuedBehavior = null;
+            Run();
+        }
+    }
+
+    void Pause() {
+        IsPlaying = false;
     }
 
     void Run() {
@@ -137,6 +154,10 @@ public class BossManager : Node {
         // if (ActiveBehavior == Config.Initial) Iteration++;
         // ActiveBehavior = ActiveBehavior.Next[Iteration % ActiveBehavior.Next.Count];
 
-        Run();
+        if (IsPlaying) {
+            Run();
+        } else {
+            QueuedBehavior = ActiveBehavior;
+        }
     }
 }

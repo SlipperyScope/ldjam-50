@@ -45,7 +45,7 @@ namespace ldjam50.TileBoss
         private AudioStreamPlayer2D _StartPlayer;
         public AudioStreamPlayer2D BossKillPlayer => _BossKillPlayer ??= GetNode<AudioStreamPlayer2D>("bosskillplayer");
         private AudioStreamPlayer2D _BossKillPlayer;
-        private Dialogue Dialogue;
+        public Dialogue Dialogue;
 
         public List<T> Guns<T>() where T : BossGun => Ship.GetChildren().ToList<T>();
 
@@ -127,6 +127,8 @@ namespace ldjam50.TileBoss
         public override void _EnterTree()
         {
             Time = Global.Time;
+            // Game Jam
+            Dialogue = GetNode<Dialogue>(DialoguePath);
         }
 
         /// <summary>
@@ -135,7 +137,6 @@ namespace ldjam50.TileBoss
         public override void _Ready()
         {
             Movement.MaxSpeed = new Vector2(2, 2);
-            Dialogue = GetNode<Dialogue>(DialoguePath);
             Dialogue.PhaseShift += (object o, PhaseEventArgs e) => {
                 Phase = e.Phase;
                 BuildShip();
