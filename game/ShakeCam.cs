@@ -3,27 +3,27 @@ using System;
 
 public class ShakeCam : Camera2D
 {
-    public float decay = 0.8f;
-    public Vector2 maxOffset = new Vector2(100, 75);
-    public float maxRoll = 0.1f;
-    float trauma = 100.0f;
-    int traumaPower = 2;
+    public float Decay = 0.8f;
+    public Vector2 MaxOffset = new Vector2(100, 75);
+    public float MaxRoll = 0.1f;
+    public float Trauma = 0.5f;
+    private int TraumaPower = 2;
 
-    private OpenSimplexNoise noise = new OpenSimplexNoise();
+    private OpenSimplexNoise Noise = new OpenSimplexNoise();
     private int noiseY = 0;
 
     public override void _Ready() 
     {
-        noise.Seed = (int)GD.Randi();
-        noise.Period = 4;
-        noise.Octaves = 2;
+        Noise.Seed = (int)GD.Randi();
+        Noise.Period = 4;
+        Noise.Octaves = 2;
         GD.Print("camera ready");
     }
 
     public override void _Process(float delta)
     {
-        if (trauma > 0) {
-            trauma = Mathf.Max(trauma - decay * delta, 0);
+        if (Trauma > 0) {
+            Trauma = Mathf.Max(Trauma - Decay * delta, 0);
             Shake();
         }
     }
@@ -31,9 +31,9 @@ public class ShakeCam : Camera2D
     public void Shake() {
         GD.Print("shake");
         noiseY++;
-        var amount = Mathf.Pow(trauma, traumaPower);
-        Rotation = maxRoll * amount * noise.GetNoise2d(noise.Seed, noiseY);
-        var offsetVect = new Vector2(maxOffset.x * amount * noise.GetNoise2d(noise.Seed * 2, noiseY), maxOffset.y * amount * noise.GetNoise2d(noise.Seed * 3, noiseY));
+        var amount = Mathf.Pow(Trauma, TraumaPower);
+        Rotation = MaxRoll * amount * Noise.GetNoise2d(Noise.Seed, noiseY);
+        var offsetVect = new Vector2(MaxOffset.x * amount * Noise.GetNoise2d(Noise.Seed * 2, noiseY), MaxOffset.y * amount * Noise.GetNoise2d(Noise.Seed * 3, noiseY));
         Offset = offsetVect;
     }
 }

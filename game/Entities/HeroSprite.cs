@@ -24,6 +24,8 @@ namespace ldjam50.Entities
         private AudioStreamPlayer2D _ShootAudioPlayer;
         public AudioStreamPlayer2D HornAudioPlayer => _HornAudioPlayer ??= GetNode<AudioStreamPlayer2D>("HornPlayer") ?? throw new Exception("No horn audio player on Hero");
         private AudioStreamPlayer2D _HornAudioPlayer;
+        public ShakeCam PlayerCam => _PlayerCam ??= GetParent().GetNode<ShakeCam>("Camera2D") ?? throw new Exception("No camera on Hero");
+        private ShakeCam _PlayerCam;
         const String BulletScenePath = "res://Bullet.tscn";
         public PackedScene BulletScene;
 
@@ -111,8 +113,10 @@ namespace ldjam50.Entities
             Health = Health - 1;
             if (Health == 0) {
                 // Death
+                PlayerCam.Trauma = 10.0f; //probably don't actually want this
                 Ded?.Invoke(this, new EventArgs());
             } else {
+                PlayerCam.Trauma = 1.0f;
                 Ouchies?.Invoke(this, new OuchiesArgs(Health));
             }
         }

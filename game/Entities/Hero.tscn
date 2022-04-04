@@ -8,7 +8,7 @@
 [ext_resource path="res://Sound/herohit1.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Sound/herohit3.mp3" type="AudioStream" id=7]
 [ext_resource path="res://Sound/game_Sounds_Alpha_Horn_Sound.mp3" type="AudioStream" id=8]
-[ext_resource path="res://Entities/ShakeyCam.cs" type="Script" id=9]
+[ext_resource path="res://ShakeCam.cs" type="Script" id=9]
 
 [node name="Hero" type="Area2D"]
 script = ExtResource( 4 )
@@ -43,6 +43,7 @@ script = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 542, 0 )
+z_index = 9
 current = true
 script = ExtResource( 9 )
 
