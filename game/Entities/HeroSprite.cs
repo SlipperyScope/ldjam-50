@@ -18,8 +18,15 @@ namespace ldjam50.Entities
 
         public PlayerController Controller => _Controller ??= GetNode<PlayerController>("Controller") ?? throw new Exception("No controller found on hero");
         private PlayerController _Controller;
-        public AudioStreamPlayer2D HitAudioPlayer => _HitAudioPlayer ??= GetNode<AudioStreamPlayer2D>("Hit1Player") ?? throw new Exception("No hit audio player on Hero");
+        public AudioStreamPlayer2D HitAudioPlayer => _HitAudioPlayer ??= GetNode<AudioStreamPlayer2D>("Hit1Player") ?? throw new Exception("Missing hit audio player on Hero");
         private AudioStreamPlayer2D _HitAudioPlayer;
+        public AudioStreamPlayer2D HitAudioPlayer2 => _HitAudioPlayer2 ??= GetNode<AudioStreamPlayer2D>("Hit2Player") ?? throw new Exception("Missing hit audio player on Hero");
+        private AudioStreamPlayer2D _HitAudioPlayer2;
+        public AudioStreamPlayer2D HitAudioPlayer3 => _HitAudioPlayer3 ??= GetNode<AudioStreamPlayer2D>("Hit3Player") ?? throw new Exception("Missing hit audio player on Hero");
+        private AudioStreamPlayer2D _HitAudioPlayer3;
+        public AudioStreamPlayer2D HitAudioPlayer4 => _HitAudioPlayer4 ??= GetNode<AudioStreamPlayer2D>("Hit4Player") ?? throw new Exception("Missing hit audio player on Hero");
+        private AudioStreamPlayer2D _HitAudioPlayer4;
+        private AudioStreamPlayer2D[] HitPlayers;
         public AudioStreamPlayer2D ShootAudioPlayer => _ShootAudioPlayer ??= GetNode<AudioStreamPlayer2D>("PlayerShoot") ?? throw new Exception("No shoot audio player on Hero");
         private AudioStreamPlayer2D _ShootAudioPlayer;
         public AudioStreamPlayer2D HornAudioPlayer => _HornAudioPlayer ??= GetNode<AudioStreamPlayer2D>("HornPlayer") ?? throw new Exception("No horn audio player on Hero");
@@ -52,6 +59,7 @@ namespace ldjam50.Entities
         {
             Movement.InterpSpeed = new(0.3f, 0.3f);
             BulletScene = GD.Load<PackedScene>(BulletScenePath);
+            HitPlayers = new AudioStreamPlayer2D[] { HitAudioPlayer, HitAudioPlayer2, HitAudioPlayer3, HitAudioPlayer4 };
         }
 
         public void SetUsUpTheDialogue(Dialogue dialogue) {
@@ -109,7 +117,7 @@ namespace ldjam50.Entities
                 return;
             }
             //take damage
-            HitAudioPlayer.Play();
+            HitPlayers[(int)(GD.Randi() % HitPlayers.Length)].Play();
             Health = Health - 1;
             if (Health == 0) {
                 // Death
