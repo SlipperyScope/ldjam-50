@@ -12,10 +12,26 @@ namespace ldjam50.TileBoss
 
     public class PhaseCompleteEventArgs : EventArgs
     {
-        public int Phase { get; init; }
+        //public int Phase { get; init; }
+        public int Phase { get; set; }
     }
 
-    public record TileInfo(Vector2 Position, TileType Type, Single HP, CanHitQuery CanHit);
+    //public record TileInfo(Vector2 Position, TileType Type, Single HP, CanHitQuery CanHit);
+    public record TileInfo
+    {
+        public TileInfo(Vector2 position, TileType type, Single hP, CanHitQuery canHit)
+        {
+            Position = position;
+            Type = type;
+            HP = hP;
+            CanHit = canHit;
+        }
+
+        public Vector2 Position { get; set; }
+        public TileType Type { get; set; }
+        public Single HP { get; set; }
+        public CanHitQuery CanHit { get; set; }
+    }
 
     public enum TileType
     {

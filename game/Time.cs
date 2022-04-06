@@ -10,7 +10,21 @@ namespace ldjam50
     public class Time : Node
     {
         public delegate void TimeNotifyCallback();
-        private record TimeNotify(Single Created, Single Time, TimeNotifyCallback callback);
+        private record TimeNotify
+        {
+            public TimeNotify(Single created, Single time, TimeNotifyCallback callback)
+            {
+                Created = created;
+                Time = time;
+                Callback = callback;
+            }
+
+            public Single Created { get; set; }
+            public Single Time { get; set; }
+            public TimeNotifyCallback Callback { get; set; }
+        }
+
+
 
         /// <summary>
         /// Number of seconds since game start
@@ -48,7 +62,7 @@ namespace ldjam50
 
             foreach( var notify in Notifies.Where(n => Seconds >= n.Time).ToList())
             {
-                notify.callback();
+                notify.Callback();
                 Notifies.Remove(notify);
             }
         }

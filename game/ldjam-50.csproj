@@ -1,6 +1,7 @@
-<Project Sdk="Godot.NET.Sdk/3.3.0">
+﻿<Project Sdk="Godot.NET.Sdk/3.3.0">
   <PropertyGroup>
-    <TargetFramework>net5</TargetFramework>
+	<TargetFramework>net472</TargetFramework>
+	<LangVersion>latestMajor</LangVersion>
     <RootNamespace>ldjam50</RootNamespace>
   </PropertyGroup>
 </Project>
