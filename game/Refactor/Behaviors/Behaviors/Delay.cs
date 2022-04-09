@@ -20,12 +20,9 @@ namespace ldjam50.Refactor.Behaviors.Behaviors
         [Export]
         private Single Time = 1f;
 
-        [Export]
-        private Boolean DebugPrint = false;
-
         public override void Execute(IRobot robot)
         {
-            if (DebugPrint)
+            if (Debug)
             {
                 Global.Time.Seconds.Printf("Started waiting at ", "0.00");
                 Global.Time.AddOneshot(Time, () =>

@@ -1,15 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Refactor/Entities/BigBad/BigBad.cs" type="Script" id=1]
 [ext_resource path="res://Art/babby.png" type="Texture" id=2]
 [ext_resource path="res://Refactor/Entities/BigBad/BigBadController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Refactor/Entities/BigBad/BigBadHull.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Refactor/Behaviors/Conditions/RobotBooleanCheck.cs" type="Script" id=5]
-[ext_resource path="res://Refactor/Behaviors/BehaviorRoot.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Refactor/Behaviors/Sequence.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Refactor/Behaviors/Behaviors/Print.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Refactor/Behaviors/Behaviors/Delay.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Refactor/Behaviors/Behaviors/SetBoolean.cs" type="Script" id=10]
+[ext_resource path="res://Refactor/Behaviors/Scenes/Sequences/Any.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Refactor/Behaviors/Scenes/Behaviors/Print.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Refactor/Behaviors/Scenes/BehaviorRoot.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Refactor/Behaviors/Scenes/Behaviors/Test.tscn" type="PackedScene" id=8]
 
 [node name="BigBad" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -24,34 +22,14 @@ texture = ExtResource( 2 )
 [node name="BigBadHull" parent="." instance=ExtResource( 4 )]
 tile_data = PoolIntArray( 0, 1, 0 )
 
-[node name="BehaviorRoot" parent="." instance=ExtResource( 6 )]
-StartDelay = 0.0
+[node name="BehaviorRoot" parent="." instance=ExtResource( 7 )]
+StartDelay = 1.0
 
-[node name="Sequence" parent="BehaviorRoot" instance=ExtResource( 7 )]
+[node name="Any" parent="BehaviorRoot" instance=ExtResource( 5 )]
 
-[node name="Set" type="Node" parent="BehaviorRoot/Sequence"]
-script = ExtResource( 10 )
-VarName = "TestMeDaddy"
-Force = true
+[node name="Test" parent="BehaviorRoot/Any" instance=ExtResource( 8 )]
+Debug = true
+Status = 1
 
-[node name="Read" type="Node" parent="BehaviorRoot/Sequence"]
-script = ExtResource( 5 )
-Value = "TestMeDaddy"
-
-[node name="Print" parent="BehaviorRoot/Sequence/Read" instance=ExtResource( 8 )]
-Message = "cool cool"
-
-[node name="Delay" parent="BehaviorRoot/Sequence" instance=ExtResource( 9 )]
-DebugPrint = true
-
-[node name="Set2" type="Node" parent="BehaviorRoot/Sequence"]
-script = ExtResource( 10 )
-VarName = "TestMeDaddy"
-Value = false
-
-[node name="Read2" type="Node" parent="BehaviorRoot/Sequence"]
-script = ExtResource( 5 )
-Value = "TestMeDaddy"
-
-[node name="Print" parent="BehaviorRoot/Sequence/Read2" instance=ExtResource( 8 )]
-Message = "no no"
+[node name="Print" parent="BehaviorRoot/Any" instance=ExtResource( 6 )]
+Message = "This should print"

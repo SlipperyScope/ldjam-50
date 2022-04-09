@@ -1,4 +1,5 @@
-﻿using ldjam50.Refactor.Interfaces;
+﻿using Godot;
+using ldjam50.Refactor.Interfaces;
 using ldjam50.Refactor.Utils;
 using System;
 using System.Collections.Generic;
@@ -15,66 +16,62 @@ namespace ldjam50.Refactor.Behaviors
     /// <br />Failure: On failure of any behavior
     /// <br />Abort:   On abort of any behavior
     /// </para></summary>
-    public class Sequence : Behavior
+    public abstract class Sequence : Node, IBehavior
     {
-        private List<Behavior> Behaviors;
-        private Int32 Current = 0;
-        private IRobot Robot;
+        public event IBehavior.BehaviorFinishedEventHandler BehaviorFinished;
 
+        protected List<IBehavior> Behaviors = new();
+        public List<ICondition> Conditions { get; private set; } = new();
+        public List<IMutator> Mutators { get; private set; } = new();
+
+        public Boolean CanRun(IRobot robot) => Conditions.All(c => c.CanRun(robot));
+        public BehaviorStatus Mutate(IRobot robot, BehaviorStatus status)
+        {
+            Mutators.ForEach(m => status = m.Mutate(robot, status));
+            return status;
+        }
+
+        [Export]
+        protected Boolean Debug = false;
+
+        protected Int32 Current = 0;
+        protected IRobot Robot;
+
+        /// <summary>
+        /// Ready
+        /// </summary>
+        /// <exception cref="InvalidChildException">Non-behavior child</exception>
         public override void _Ready()
         {
             var children = GetChildren().ToList();
-            if (children.Any(c => c is not Behavior)) throw new InvalidChildException($"Children are not {typeof(Behavior)}");
-            Behaviors = children.Select(c => c as Behavior).ToList();
+            if (children.Any(c => c is not IBehavior or ICondition or IMutator)) throw new InvalidChildException($"{GetPath()} has invalid children");
+            Behaviors = children.Select(c => c as IBehavior).ToList();
         }
 
-        public override void Execute(IRobot robot)
+        public void Execute(IRobot robot)
         {
-            Robot = robot;
-            ExecuteSubbehavior();
-        }
+            if (Debug) "Executing".Print(GetPath());
 
-        private void ExecuteSubbehavior()
-        {
             if (Behaviors.Count == 0)
             {
-                Finish(true);
+                OnExecuteFinish(BehaviorStatus.Ignore);
+                return;
             }
-            else if (Current >= Behaviors.Count)
-            {
-                Current = 0;
-                Finish(true);
-            }
-            else
-            {
-                var behavior = Behaviors[Current];
-                behavior.ExecuteFinish += SubBehaviorFinish;
-                behavior.Execute(Robot);
-            }
+
+            Robot = robot;
+            ExecuteSubBehavior();
         }
 
-        private void SubBehaviorFinish(Object sender, ExecuteFinishEventArgs e)
-        {
-            var behavior = sender as Behavior;
-            behavior.ExecuteFinish -= SubBehaviorFinish;
+        /// <summary>
+        /// Executes a subbehavior
+        /// </summary>
+        protected abstract void ExecuteSubBehavior();
 
-            switch (e.Status)
-            {
-                case ExecuteStatus.Success:
-                    Current++;
-                    ExecuteSubbehavior();
-                    break;
-                case ExecuteStatus.Failure:
-                    Current = 0;
-                    Finish(false);
-                    break;
-                case ExecuteStatus.Abort:
-                    Current = 0;
-                    Abort(behavior);
-                    break;
-                default:
-                    break;
-            }
+        protected virtual void OnExecuteFinish(BehaviorStatus status)
+        {
+            Current = 0;
+            if (Debug) status.Print($"{GetPath()} finished with status");
+            BehaviorFinished?.Invoke(this, new IBehavior.BehaviorFinishedEventArgs(status));
         }
     }
 }

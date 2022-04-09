@@ -40,7 +40,7 @@ namespace ldjam50.Refactor.Behaviors
         public Boolean Waiting { get; private set; } = false;
 
         private IRobot Robot;
-        private Behavior Behavior;
+        private IBehavior Behavior;
         private UInt64 TickTicket;
 
         /// <summary>
@@ -60,14 +60,14 @@ namespace ldjam50.Refactor.Behaviors
         public override void _Ready()
         {
             if (GetChildCount() > 1) throw new InvalidChildException("Root behavior can only have one child");
-            if (GetChild(0) is not Behavior behavior)
+            if (GetChild(0) is not IBehavior behavior)
             {
                 throw new InvalidNodeCastException("Child is not a behavior");
             }
             else
             {
                 Behavior = behavior;
-                Behavior.ExecuteFinish += Child_ExecuteFinish;
+                Behavior.BehaviorFinished += BehaviorFinished; ;
             }
 
             if (AutoStart is true)
@@ -77,14 +77,12 @@ namespace ldjam50.Refactor.Behaviors
         }
 
         /// <summary>
-        /// Handles execute finished events from the child behavior
+        /// Called when a behavior finishes
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Child_ExecuteFinish(System.Object sender, ExecuteFinishEventArgs e)
+        private void BehaviorFinished(IBehavior sender, IBehavior.BehaviorFinishedEventArgs e)
         {
             Waiting = false;
-            if (e.Status == ExecuteStatus.Abort) $"{(sender as Node).GetPath()} aborted".Print();
+            if (e.Status == BehaviorStatus.Abort) $"{(sender as Node).GetPath()} aborted".Print();
         }
 
         /// <summary>

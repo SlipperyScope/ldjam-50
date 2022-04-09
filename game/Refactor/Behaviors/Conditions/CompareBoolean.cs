@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace ldjam50.Refactor.Behaviors.Conditions
 {
-    public class RobotBooleanCheck : Condition
+    /// <summary>
+    /// Checks a boolean
+    /// </summary>
+    public class CompareBoolean : ICondition
     {
         [Export]
         private Boolean Match = true;
@@ -16,6 +19,6 @@ namespace ldjam50.Refactor.Behaviors.Conditions
         [Export]
         private String Value;
 
-        public override Boolean CanRun(IRobot robot) => Value is not null && robot.Vars.ReadOrDefault<object>(Value) is Boolean val && val == Match;
+        public Boolean CanRun(IRobot robot) => Value is not null && robot.Vars.ReadOrDefault<object>(Value) is Boolean val && val == Match;
     }
 }
