@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ldjam50.Refactor.Behaviors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,6 @@ namespace ldjam50.Refactor.Interfaces
     /// </summary>
     public interface IRobot
     {
-
+        public RobotVars Vars { get; }
     }
 }

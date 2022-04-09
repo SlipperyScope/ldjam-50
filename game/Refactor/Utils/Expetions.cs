@@ -63,4 +63,12 @@ namespace ldjam50.Refactor.Utils
             GD.PrintErr($"{nameof(InvalidChildException)}: {message}");
         }
     }
+
+    public class RobotValueNotFound : GDErrException
+    {
+        public RobotValueNotFound(String message)
+        {
+            GD.PrintErr($"{nameof(RobotValueNotFound)}: {message}");
+        }
+    }
 }

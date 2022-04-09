@@ -1,10 +1,12 @@
 using Godot;
 using ldjam50.Entities;
 using ldjam50.Interfaces;
+using ldjam50.Refactor.Behaviors;
 using ldjam50.Refactor.Entities.BigBad.Templates;
 using ldjam50.Refactor.Interfaces;
 using ldjam50.Refactor.Utils;
 using System;
+using System.Collections.Generic;
 
 namespace ldjam50.Refactor.Entities.BigBad
 {
@@ -51,6 +53,11 @@ namespace ldjam50.Refactor.Entities.BigBad
             Position += Velocity * Global.PxPM * delta;
         }
 
+        public void BuildShip(BigBadTemplate template)
+        {
+            Hull.Build(template);
+        }
+
         #region IDamageable
         public void ApplyDamage(DamageInfo info)
         {
@@ -61,9 +68,8 @@ namespace ldjam50.Refactor.Entities.BigBad
         }
         #endregion
 
-        public void BuildShip(BigBadTemplate template)
-        {
-            Hull.Build(template);
-        }
+        #region IRobot
+        public RobotVars Vars { get; private set; } = new();
+        #endregion
     }
 }
