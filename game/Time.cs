@@ -99,7 +99,7 @@ namespace ldjam50
         /// <param name="interval">Time between notifications</param>
         /// <param name="callback">Notification callback</param>
         /// <returns>Ticket</returns>
-        public UInt64 AddLooping(Single interval, NotifyCallback callback) => AddNotify(interval, interval, -1, callback);
+        public UInt64 AddLooping(Single interval, NotifyCallback callback) => AddNotify(interval, interval, Int32.MaxValue, callback);
 
         /// <summary>
         /// Adds a looping notifier. Note: notifier must be manually removed
@@ -108,7 +108,7 @@ namespace ldjam50
         /// <param name="interval">Time between notifications</param>
         /// <param name="callback">Notification callback</param>
         /// <returns>Ticket</returns>
-        public UInt64 AddLooping(Single delay, Single interval, NotifyCallback callback) => AddNotify(delay, interval, -1, callback);
+        public UInt64 AddLooping(Single delay, Single interval, NotifyCallback callback) => AddNotify(delay, interval, Int32.MaxValue, callback);
 
         /// <summary>
         /// Adds a notify
@@ -119,7 +119,7 @@ namespace ldjam50
             var ticket = Ticket.Next;
             var notify = new Notify(ticket)
             {
-                Time = delay,
+                Time = Seconds + delay,
                 Interval = interval,
                 RemainingCalls = count,
                 Callback = callback
@@ -141,6 +141,17 @@ namespace ldjam50
         /// <param name="ticket">notify ticket</param>
         /// <returns>True if it was removed</returns>
         public Boolean RemoveNotify(UInt64 ticket) => RemoveNotify(Notifies.FirstOrDefault(n => n.Ticket == ticket));
+
+        /// <summary>
+        /// Schedules a notify to run on the next update instead of its normal time
+        /// </summary>
+        /// <param name="ticket">Notify ticket</param>
+        public void ForceNotify(UInt64 ticket)
+        {
+            var notify = Notifies.First(n => n.Ticket == ticket);
+            Notifies.Remove(notify);
+            Notifies.Add(notify with { Time = Seconds });
+        }
 
         /// <summary>
         /// Removes a notify
