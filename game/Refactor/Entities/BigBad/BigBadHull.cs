@@ -63,7 +63,7 @@ namespace ldjam50.Refactor.Entities.BigBad
             cells.Where(c => c.Tile.Name == "Core").ToList().Shuffled().ForEach(c => BuildQueue.Add(c));
             cells.Where(c => c.Tile.Name != "Core").ToList().Shuffled().ForEach(c => BuildQueue.Add(c));
 
-            BuildQueue.Count().Print("Queuing ");
+            //BuildQueue.Count().Print("Queuing ");
 
             Global.Time.AddRecurring(0f, 0.1f, BuildQueue.Count, BuildNext);
         }
@@ -81,7 +81,7 @@ namespace ldjam50.Refactor.Entities.BigBad
             }
             else
             {
-                cell.Print("Dilding ");
+                //cell.Print("Dilding ");
                 BuildQueue.Remove(cell);
                 SetCell(cell.x, cell.y, cell.Tile.ID, cell.FlipX, cell.FlipY, cell.Transpose, cell.AutotileCoordinate);
             }

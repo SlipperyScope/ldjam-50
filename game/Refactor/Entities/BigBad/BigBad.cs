@@ -11,7 +11,7 @@ namespace ldjam50.Refactor.Entities.BigBad
     /// <summary>
     /// Big bad boss
     /// </summary>
-    public class BigBad : KinematicBody2D, IDamageable
+    public class BigBad : KinematicBody2D, IDamageable, IRobot
     {
         private BigBadController Controller;
         private BigBadHull Hull;
@@ -30,7 +30,7 @@ namespace ldjam50.Refactor.Entities.BigBad
             Hull = this.GetChild<BigBadHull>();
             GetNode<Sprite>("Core").Visible = false;
 
-            Global.Time.AddNotify(2f, BuildTest);
+            Global.Time.AddOneshot(2f, BuildTest);
         }
 
         /// <summary>
@@ -40,8 +40,7 @@ namespace ldjam50.Refactor.Entities.BigBad
         {
             var template = GD.Load<PackedScene>(
                 "res://Refactor/Entities/BigBad/Templates/Template_Test.tscn").Instance<BigBadTemplate>();
-            template.Print("Template:");
-            Hull.Build(template);
+            BuildShip(template);
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace ldjam50.Refactor.Entities.BigBad
 
         public void BuildShip(BigBadTemplate template)
         {
-
+            Hull.Build(template);
         }
     }
 }

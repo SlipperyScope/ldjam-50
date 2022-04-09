@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Refactor/Entities/BigBad/BigBad.cs" type="Script" id=1]
 [ext_resource path="res://Art/babby.png" type="Texture" id=2]
 [ext_resource path="res://Refactor/Entities/BigBad/BigBadController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Refactor/Entities/BigBad/BigBadHull.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Refactor/Behaviors/Behaviors/Abort.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Refactor/Behaviors/BehaviorRoot.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Refactor/Behaviors/Sequence.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Refactor/Behaviors/Behaviors/Print.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Refactor/Behaviors/Behaviors/Delay.tscn" type="PackedScene" id=9]
 
 [node name="BigBad" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -17,3 +22,22 @@ texture = ExtResource( 2 )
 
 [node name="BigBadHull" parent="." instance=ExtResource( 4 )]
 tile_data = PoolIntArray( 0, 1, 0 )
+
+[node name="BehaviorRoot" parent="." instance=ExtResource( 6 )]
+StartDelay = 0.0
+
+[node name="Sequence" parent="BehaviorRoot" instance=ExtResource( 7 )]
+
+[node name="Print" parent="BehaviorRoot/Sequence" instance=ExtResource( 8 )]
+Message = "Helo"
+
+[node name="Delay" parent="BehaviorRoot/Sequence" instance=ExtResource( 9 )]
+Time = 2.0
+
+[node name="Print2" parent="BehaviorRoot/Sequence" instance=ExtResource( 8 )]
+Message = "Frund"
+
+[node name="Abort" parent="BehaviorRoot/Sequence" instance=ExtResource( 5 )]
+
+[node name="Print3" parent="BehaviorRoot/Sequence" instance=ExtResource( 8 )]
+Message = "Wut"
