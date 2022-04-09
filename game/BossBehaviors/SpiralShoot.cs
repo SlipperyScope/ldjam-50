@@ -14,7 +14,7 @@ public class SpiralShoot : Node, IBossBehavior
         var totalTime = 0.5f;
         var count = 25;
         var delay = totalTime / count;
-        var callbacks = new List<Time.TimeNotifyCallback>();
+        var callbacks = new List<Time.NotifyCallback>();
         foreach (var dir in Math.LerpAngle(count, 0, Mathf.Pi * 2)) {
             callbacks.Add(() => {
                 var guns = boss.Guns<SpiralBossGun>();

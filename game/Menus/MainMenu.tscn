@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Art/Start.png" type="Texture" id=1]
 [ext_resource path="res://Art/ButtonBG.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Art/Credits.png" type="Texture" id=5]
 [ext_resource path="res://Menus/MainMenu.cs" type="Script" id=6]
 [ext_resource path="res://Art/logo.png" type="Texture" id=7]
+[ext_resource path="res://Refactor/UI/SceneButton.cs" type="Script" id=8]
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.25098, 0.25098, 0.254902, 1 )
@@ -74,9 +75,9 @@ margin_right = 1110.0
 margin_bottom = 736.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer"]
-margin_top = 150.0
+margin_top = 138.0
 margin_right = 300.0
-margin_bottom = 586.0
+margin_bottom = 598.0
 custom_constants/separation = 4
 
 [node name="Start" type="TextureButton" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer/VBoxContainer"]
@@ -155,6 +156,14 @@ margin_right = 300.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Michael"
+
+[node name="Button" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 440.0
+margin_right = 300.0
+margin_bottom = 460.0
+text = "Refactor Arena"
+script = ExtResource( 8 )
+Scene = 5
 
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
 margin_left = 1114.0

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Refactor/Entities/BigBad/Templates/Template_Base.tscn" type="PackedScene" id=1]
+
+[node name="Template_Test" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -65537, 3, 0, -3, 2, 0, -1, 0, 131076, -65536, 0, 196612, -65535, 0, 131077, 65533, 0, 196611, 65534, 0, 196612, 65535, 0, 131078, 0, 1, 0, 1, 0, 196610, 196605, 0, 196611, 196606, 0, 196612, 196607, 0, 131077, 131072, 1, 0, 131073, 0, 196608, 262141, 2, 0, 262143, 0, 131079, 196608, 0, 196612, 196609, 0, 131078, 327679, 3, 0 )

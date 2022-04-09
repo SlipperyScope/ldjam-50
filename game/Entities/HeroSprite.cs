@@ -57,7 +57,7 @@ namespace ldjam50.Entities
 
         public override void _Ready()
         {
-            Movement.InterpSpeed = new(0.3f, 0.3f);
+            Movement.Snappiness = new(0.3f, 0.3f);
             BulletScene = GD.Load<PackedScene>(BulletScenePath);
             HitPlayers = new AudioStreamPlayer2D[] { HitAudioPlayer, HitAudioPlayer2, HitAudioPlayer3, HitAudioPlayer4 };
         }

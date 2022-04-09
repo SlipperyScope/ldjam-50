@@ -32,7 +32,7 @@ namespace ldjam50
         /// <summary>
         /// Pixels per meter
         /// </summary>
-        public const Single PxPM = 100f;
+        public const Single PxPM = 36f;
 
         /// <summary>
         /// Distance from the screen edge player can move to
@@ -52,7 +52,7 @@ namespace ldjam50
             { InputAction.Down, "Down" },
             { InputAction.Left, "Left" },
             { InputAction.Right, "Right" },
-            { InputAction.Space, "Space" },
+            { InputAction.Fire, "Space" },
             { InputAction.Use, "Use"},
             { InputAction.Click, "Click" },
         };
@@ -69,7 +69,7 @@ namespace ldjam50
         Down,
         Left,
         Right,
-        Space,
+        Fire,
         Click,
         Use,
     }

@@ -26,7 +26,7 @@ namespace ldjam50
             if (Input.IsActionPressed(Global.InputActions[InputAction.Right])) input.x += 1f;
             InputVector = input;
 
-            Shoot = Input.IsActionPressed(Global.InputActions[InputAction.Space]);
+            Shoot = Input.IsActionPressed(Global.InputActions[InputAction.Fire]);
         }
     }
 }

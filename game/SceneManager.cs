@@ -33,7 +33,8 @@ namespace ldjam50
             { SceneID.AndrewScene, "res://Levels/AndrewLevel.tscn" },
             { SceneID.AdamScene, "res://Levels/Adumb.tscn" },
             { SceneID.MichaelScene, "" },
-            { SceneID.BattleScene, "res://Levels/Battle.tscn" }
+            { SceneID.BattleScene, "res://Levels/Battle.tscn" },
+            { SceneID.Arena, "res://Refactor/Arena.tscn" },
         };
     }
 
@@ -43,6 +44,7 @@ namespace ldjam50
         AndrewScene,
         AdamScene,
         MichaelScene,
-        BattleScene
+        BattleScene,
+        Arena
     }
 }

@@ -13,10 +13,10 @@ public class DownToUpShoot : Node, IBossBehavior
     public void Start(TileBoss boss) {
         var delay = 0.1f;
         var count = 8;
-        var callbacks = new List<Time.TimeNotifyCallback>();
+        var callbacks = new List<Time.NotifyCallback>();
         foreach (var dir in Math.LerpAngle(count, Mathf.Pi/2, Mathf.Pi)) {
             callbacks.Add(() => {
-                Global.Time.QueueNotify(0.5f, new List<Time.TimeNotifyCallback>(){
+                Global.Time.QueueNotify(0.5f, new List<Time.NotifyCallback>(){
                     () => { foreach (var gun in boss.Guns<SpiralBossGun>()) gun.Shoot(dir); },
                     () => { foreach (var gun in boss.Guns<SpiralBossGun>()) gun.Shoot(dir); },
                     () => { foreach (var gun in boss.Guns<SpiralBossGun>()) gun.Shoot(dir); },

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Refactor/Entities/BigBad/BigBadHull.cs" type="Script" id=1]
+[ext_resource path="res://Refactor/Entities/BigBad/BigBadTileset.tres" type="TileSet" id=2]
+
+[node name="BigBadHull" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 36, 36 )
+cell_custom_transform = Transform2D( 36, 0, 0, 36, 0, 0 )
+format = 1
+script = ExtResource( 1 )

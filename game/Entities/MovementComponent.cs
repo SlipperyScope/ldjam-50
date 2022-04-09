@@ -10,9 +10,11 @@ namespace ldjam50.Entities
 {
     public class MovementComponent : Node
     {
-        #region Config
-        public Vector2 InterpSpeed = new(0.1f, 0.1f);
-        #endregion
+        /// <summary>
+        /// How quickly to get to speed
+        /// </summary>
+        [Export]
+        public Vector2 Snappiness = new(0.1f, 0.1f);
 
         /// <summary>
         /// Movement speed in m/s
@@ -84,7 +86,7 @@ namespace ldjam50.Entities
             var vel = Velocity;
             var pos = Movable.Position;
 
-            vel = vel.LinearInterpolate(TargetVelocity, InterpSpeed);
+            vel = vel.LinearInterpolate(TargetVelocity, Snappiness);
 
             Movable.Position = pos + vel * Global.PxPM * delta;
 

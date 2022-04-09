@@ -1,4 +1,5 @@
 using Godot;
+using ldjam50.Refactor.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,38 @@ namespace ldjam50
         /// <param name="provider">Format provider</param>
         public static void Printf(this IFormattable t, String message, String format, IFormatProvider provider = null) => GD.Print($"{message} {t.ToString(format, provider)}");
 
+
+        /// <summary>
+        /// Prints warning to console
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        public static void Warn<T>(this T t) => GD.PushWarning($"{t}");
+
+        /// <summary>
+        /// Prints warning to console
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <param name="message">Message to prepend</param>
+        public static void Warn<T>(this T t, String message) => GD.PushWarning($"{message} {t}");
+
+        /// <summary>
+        /// Prints warning to console
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="format">Formatting to apply</param>
+        /// <param name="provider">Format provider</param>
+        public static void Warnf(this IFormattable t, String format, IFormatProvider provider = null) => GD.PushWarning(t.ToString(format, provider));
+
+        /// <summary>
+        /// Prints warning to console
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="message">Message to prepend</param>
+        /// <param name="format">Format string</param>
+        /// <param name="provider">Format provider</param>
+        public static void Warnf(this IFormattable t, String message, String format, IFormatProvider provider = null) => GD.PushWarning($"{message} {t.ToString(format, provider)}");
         #region Node
 
         /// <summary>
@@ -78,6 +111,17 @@ namespace ldjam50
             node.GetParent()?.RemoveChild(node);
             node.QueueFree();
         }
+
+        /// <summary>
+        /// Gets a reference to a child node
+        /// </summary>
+        /// <typeparam name="T">Type of node</typeparam>
+        /// <param name="nameOverride">Overrides the name of the child, default is child's type</param>
+        /// <returns>Reference to the child</returns>
+        /// <exception cref="ChildNotFoundException">Thrown if the node is not found</exception>
+        public static T GetChild<T>(this Node from, String nameOverride = null) where T : Node
+            => from.GetNode(nameOverride ?? typeof(T).Name) as T
+            ?? throw new ChildNotFoundException($"{from.Name} has no child of type {typeof(T)} named {nameOverride ?? typeof(T).Name}");
 
         #endregion
 
@@ -195,6 +239,54 @@ namespace ldjam50
         /// <param name="ifTrue">Message if true</param>
         /// <param name="ifFalse">Message if false</param>
         public static void Print(this Boolean boolean, String message, String ifTrue, String ifFalse) => GD.Print($"{message} {(boolean ? ifTrue : ifFalse)}");
+
+        #endregion
+
+        #region IEnumerable
+
+        /// <summary>
+        /// Returns a random element from an IEnumerable
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="enumerable"></param>
+        /// <returns>Element</returns>
+        public static T Random<T>(this IEnumerable<T> enumerable) => enumerable.ElementAt((Int32)(GD.Randi() % enumerable.Count()));
+
+        /// <summary>
+        /// Shuffles a list into a random order
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="list">List</param>
+        /// <returns>New shuffled list</returns>
+        public static List<T> Shuffled<T>(this List<T> list)
+        {
+            List<T> from = list.ToList();
+            List<T> shuffled = new();
+            Int32 i;
+            while(from.Count > 0)
+            {
+                i = (Int32)(GD.Randi() % from.Count);
+                shuffled.Add(from[i]);
+                from.RemoveAt(i);
+            }
+            return shuffled;
+        }
+
+        #endregion
+
+        #region Vector2
+
+        /// <summary>
+        /// Determines if the vector is adjecant to <paramref name="other"/>
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="other">Other vector</param>
+        /// <returns>True if they are adjacent</returns>
+        public static Boolean AjacentTo(this Vector2 from, Vector2 other)
+        {
+            var difference = from - other;
+            return difference == Vector2.Up || difference == Vector2.Down || difference == Vector2.Left || difference == Vector2.Right;
+        }
 
         #endregion
     }
