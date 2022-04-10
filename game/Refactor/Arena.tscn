@@ -5,4 +5,4 @@
 [node name="Arena" type="Node2D"]
 
 [node name="BigBad" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1450, 535 )
+position = Vector2( 1602, 557 )

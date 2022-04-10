@@ -29,7 +29,7 @@ namespace ldjam50.Refactor.Entities.BigBad
 
         //private readonly List<Cell> PendingBuild = new();
         private readonly List<Cell> BuildQueue = new();
-        
+
         /// <summary>
         /// Builds a hull from a template
         /// </summary>
@@ -37,7 +37,7 @@ namespace ldjam50.Refactor.Entities.BigBad
         public void Build(BigBadTemplate template)
         {
             Clear();
-            
+
             var cells = new List<Cell>();
 
             Int32 x, y;
@@ -63,8 +63,7 @@ namespace ldjam50.Refactor.Entities.BigBad
             cells.Where(c => c.Tile.Name == "Core").ToList().Shuffled().ForEach(c => BuildQueue.Add(c));
             cells.Where(c => c.Tile.Name != "Core").ToList().Shuffled().ForEach(c => BuildQueue.Add(c));
 
-            //BuildQueue.Count().Print("Queuing ");
-
+            HullEvent?.Invoke(this, new HullEventArgs(HullAction.StartBuild));
             Global.Time.AddRecurring(0f, 0.1f, BuildQueue.Count, BuildNext);
         }
 
@@ -84,6 +83,10 @@ namespace ldjam50.Refactor.Entities.BigBad
                 //cell.Print("Dilding ");
                 BuildQueue.Remove(cell);
                 SetCell(cell.x, cell.y, cell.Tile.ID, cell.FlipX, cell.FlipY, cell.Transpose, cell.AutotileCoordinate);
+                if (BuildQueue.Count == 0)
+                {
+                    HullEvent?.Invoke(this, new HullEventArgs(HullAction.CompleteBuild));
+                }
             }
         }
     }
@@ -92,6 +95,11 @@ namespace ldjam50.Refactor.Entities.BigBad
 
     public class HullEventArgs : EventArgs
     {
+        public HullEventArgs(HullAction hullAction)
+        {
+            HullAction = hullAction;
+        }
+
         public HullAction HullAction { get; set; }
     }
 

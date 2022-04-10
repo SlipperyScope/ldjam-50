@@ -12,8 +12,7 @@ namespace ldjam50.Refactor.Behaviors
     /// <summary>
     /// Base class for behaviors
     /// </summary>
-    /// <remarks>Finish() or Abort() must be called after 
-    /// execute for the behavior to complete</remarks>
+    /// <remarks>Finish() or Abort() must be called after execute for the behavior to complete</remarks>
     public abstract class Behavior : Node, IBehavior
     {
         public event IBehavior.BehaviorFinishedEventHandler BehaviorFinished;

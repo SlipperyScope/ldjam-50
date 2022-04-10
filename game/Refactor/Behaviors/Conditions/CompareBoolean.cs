@@ -9,16 +9,18 @@ using System.Threading.Tasks;
 namespace ldjam50.Refactor.Behaviors.Conditions
 {
     /// <summary>
-    /// Checks a boolean
+    /// Checks a boolean against a robotvars value
+    /// <para>Pass: Values are the same
+    /// <br />Fail: Values are not the same</para>
     /// </summary>
-    public class CompareBoolean : ICondition
+    public class CompareBoolean : Node, ICondition
     {
+        [Export]
+        private String VarName;
+
         [Export]
         private Boolean Match = true;
 
-        [Export]
-        private String Value;
-
-        public Boolean CanRun(IRobot robot) => Value is not null && robot.Vars.ReadOrDefault<object>(Value) is Boolean val && val == Match;
+        public Boolean CanRun(IRobot robot) => VarName is not null && robot.Vars.ReadOrDefault<object>(VarName) is Boolean val && val == Match;
     }
 }

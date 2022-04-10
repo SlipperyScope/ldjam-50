@@ -112,5 +112,18 @@ namespace ldjam50.Refactor.Behaviors
         /// <param name="name">Name of var</param>
         /// <returns>True if <typeparamref name="name"/> exists and is <typeparamref name="T"/></returns>
         public Boolean Exists<T>(String name) => vars.ContainsKey(name) && vars[name] is T;
+
+        /// <summary>
+        /// Writes a new var
+        /// </summary>
+        /// <param name="name">Name of var</param>
+        /// <param name="value">Var value</param>
+        /// <returns>True if it was written</returns>
+        public Boolean WriteNew(String name, Object value)
+        {
+            if (vars.ContainsKey(name)) return false;
+            vars.Add(name, value);
+            return true;
+        }
     }
 }

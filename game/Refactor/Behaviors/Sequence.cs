@@ -44,8 +44,10 @@ namespace ldjam50.Refactor.Behaviors
         public override void _Ready()
         {
             var children = GetChildren().ToList();
-            if (children.Any(c => c is not IBehavior or ICondition or IMutator)) throw new InvalidChildException($"{GetPath()} has invalid children");
-            Behaviors = children.Select(c => c as IBehavior).ToList();
+            if (children.All(c => c is IBehavior or ICondition or IMutator) is false) throw new InvalidChildException($"{GetPath()} has invalid children");
+            Behaviors = children.Where(c => c is IBehavior).Select(b => b as IBehavior).ToList();
+            Conditions = children.Where(c => c is ICondition).Select(c => c as ICondition).ToList();
+            Mutators = children.Where(c => c is IMutator).Select(m => m as IMutator).ToList();
         }
 
         public void Execute(IRobot robot)

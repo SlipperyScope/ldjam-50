@@ -4,3 +4,8 @@
 
 [node name="CompareBoolean" type="Node"]
 script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "Checks a boolean against a robotvars value
+Pass: Values are the same
+Fail: Values are not the same"
+}

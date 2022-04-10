@@ -23,6 +23,11 @@ namespace ldjam50.Refactor.Entities.BigBad
         /// </summary>
         public Vector2 Velocity { get; set; }
 
+        public override void _EnterTree()
+        {
+            InitRobotVars();
+        }
+
         /// <summary>
         /// Ready
         /// </summary>
@@ -32,7 +37,7 @@ namespace ldjam50.Refactor.Entities.BigBad
             Hull = this.GetChild<BigBadHull>();
             GetNode<Sprite>("Core").Visible = false;
 
-            Global.Time.AddOneshot(2f, BuildTest);
+            //Global.Time.AddOneshot(2f, BuildTest);
         }
 
         /// <summary>
@@ -55,7 +60,26 @@ namespace ldjam50.Refactor.Entities.BigBad
 
         public void BuildShip(BigBadTemplate template)
         {
+            Hull.HullEvent += HullEvent;
             Hull.Build(template);
+
+        }
+
+        private void HullEvent(System.Object sender, HullEventArgs e)
+        {
+            switch (e.HullAction)
+            {
+                case HullAction.StartBuild:
+                    Vars.Write("Building", true);
+                    break;
+                case HullAction.CompleteBuild:
+                    (sender as BigBadHull).HullEvent -= HullEvent;
+                    Vars.Write("Building", false);
+                    Vars.Write("HasHull", true);
+                    break;
+                default:
+                    break;
+            }
         }
 
         #region IDamageable
@@ -70,6 +94,13 @@ namespace ldjam50.Refactor.Entities.BigBad
 
         #region IRobot
         public RobotVars Vars { get; private set; } = new();
+
+        private void InitRobotVars()
+        {
+            Vars.WriteNew("HasHull", false);
+            Vars.WriteNew("Building", false);
+        }
+
         #endregion
     }
 }
