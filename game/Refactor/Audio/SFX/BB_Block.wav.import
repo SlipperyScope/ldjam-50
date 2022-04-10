@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BB_Block.wav-10a29000e23d911a77841db5f2920eed.sample"
+
+[deps]
+
+source_file="res://Refactor/Audio/SFX/BB_Block.wav"
+dest_files=[ "res://.import/BB_Block.wav-10a29000e23d911a77841db5f2920eed.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

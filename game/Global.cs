@@ -1,4 +1,5 @@
 using Godot;
+using ldjam50.Refactor;
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +10,8 @@ namespace ldjam50
         public static Global Instance { get; private set; }
         public static Time Time { get; private set; }
         public static SceneManager SceneManager { get; private set; }
+        public static SFXManager SFX { get; private set; }
+        public static Camera2D Camera { get; set; }
 
         /// <summary>
         /// Enter Tree
@@ -25,6 +28,7 @@ namespace ldjam50
         {
             AddChild(Time = new Time());
             AddChild(SceneManager = new SceneManager());
+            AddChild(SFX = new SFXManager());
         }
 
         #region Constants

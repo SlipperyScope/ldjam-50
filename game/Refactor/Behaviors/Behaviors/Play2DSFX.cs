@@ -16,28 +16,47 @@ namespace ldjam50.Refactor.Behaviors.Behaviors
     /// </summary>
     public class Play2DSFX : Behavior
     {
-        [Export]
-        private NodePath Player;
-        private AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>(Player);
-        private AudioStreamPlayer2D _AudioPlayer;
+        //[Export]
+        //private NodePath Player;
+        //private AudioStreamPlayer2D AudioPlayer => _AudioPlayer ??= GetNode<AudioStreamPlayer2D>(Player);
+        //private AudioStreamPlayer2D _AudioPlayer;
+
+        //[Export]
+        //private AudioStream SFX;
 
         [Export]
-        private AudioStream SFX;
+        private Sample SFX;
         
         public override void Execute(IRobot robot)
         {
-            if (AudioPlayer is null || SFX is null)
+            if (Global.SFX is null)
             {
-                if (AudioPlayer is null) "Player is null".Warn();
-                if (SFX is null) "SFX is null".Warn();
                 Abort();
+                return;
+            }
+            else if (robot is Node2D robonode)
+            {
+                Global.SFX.Play(SFX, robonode.GlobalPosition);
             }
             else
             {
-                if (AudioPlayer.Stream != SFX) AudioPlayer.Stream = SFX;
-                AudioPlayer.Play();
-                Finish(true);
+                Global.SFX.Play(SFX);
             }
+
+            Finish(true);
+
+            //if (AudioPlayer is null || SFX is null)
+            //{
+            //    if (AudioPlayer is null) "Player is null".Warn();
+            //    if (SFX is null) "SFX is null".Warn();
+            //    Abort();
+            //}
+            //else
+            //{
+            //    if (AudioPlayer.Stream != SFX) AudioPlayer.Stream = SFX;
+            //    AudioPlayer.Play();
+            //    Finish(true);
+            //}
         }
     }
 }

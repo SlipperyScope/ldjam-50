@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Refactor/Entities/BigBad/BigBad.cs" type="Script" id=1]
 [ext_resource path="res://Art/babby.png" type="Texture" id=2]
 [ext_resource path="res://Refactor/Entities/BigBad/BigBadController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Refactor/Entities/BigBad/BigBadHull.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Refactor/Behaviors/Scenes/Sequences/Any.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Sound/game_Sounds_Alpha_Horn_Sound.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Refactor/Behaviors/Scenes/BehaviorRoot.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Refactor/Behaviors/Scenes/Behaviors/Play2DSFX.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Refactor/Behaviors/Scenes/Sequences/All.tscn" type="PackedScene" id=9]
@@ -43,10 +42,21 @@ Match = false
 VarName = "HasHull"
 Match = false
 
-[node name="PlaySFX" parent="BehaviorRoot/Any/[All] Beep and build ship" instance=ExtResource( 8 )]
+[node name="PlaySFX2" parent="BehaviorRoot/Any/[All] Beep and build ship" instance=ExtResource( 8 )]
 Debug = true
-Player = NodePath("../../../../AudioStreamPlayer2D")
-SFX = ExtResource( 6 )
+
+[node name="Delay" parent="BehaviorRoot/Any/[All] Beep and build ship" instance=ExtResource( 10 )]
+Time = 0.1
+
+[node name="PlaySFX3" parent="BehaviorRoot/Any/[All] Beep and build ship" instance=ExtResource( 8 )]
+Debug = true
+
+[node name="Delay2" parent="BehaviorRoot/Any/[All] Beep and build ship" instance=ExtResource( 10 )]
+Time = 0.1
+
+[node name="PlaySFX4" parent="BehaviorRoot/Any/[All] Beep and build ship" instance=ExtResource( 8 )]
+Debug = true
+SFX = 1
 
 [node name="Build Test Ship" type="Node" parent="BehaviorRoot/Any/[All] Beep and build ship"]
 script = ExtResource( 11 )

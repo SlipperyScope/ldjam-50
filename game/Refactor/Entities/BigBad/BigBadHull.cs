@@ -27,6 +27,9 @@ namespace ldjam50.Refactor.Entities.BigBad
         [Export]
         private Int32 CoreHP = 3;
 
+        private AudioStreamPlayer2D SFX => _SFX ??= this.GetChild<AudioStreamPlayer2D>();
+        private AudioStreamPlayer2D _SFX;
+
         //private readonly List<Cell> PendingBuild = new();
         private readonly List<Cell> BuildQueue = new();
 
@@ -37,6 +40,7 @@ namespace ldjam50.Refactor.Entities.BigBad
         public void Build(BigBadTemplate template)
         {
             Clear();
+            SetCellv(Vector2.Zero, template.TileSet.Tiles.First(t => t.Name == "Core").ID);
 
             var cells = new List<Cell>();
 
@@ -64,7 +68,7 @@ namespace ldjam50.Refactor.Entities.BigBad
             cells.Where(c => c.Tile.Name != "Core").ToList().Shuffled().ForEach(c => BuildQueue.Add(c));
 
             HullEvent?.Invoke(this, new HullEventArgs(HullAction.StartBuild));
-            Global.Time.AddRecurring(0f, 0.1f, BuildQueue.Count, BuildNext);
+            Global.Time.AddRecurring(0f, 0.05f, BuildQueue.Count, BuildNext);
         }
 
         /// <summary>
@@ -83,6 +87,12 @@ namespace ldjam50.Refactor.Entities.BigBad
                 //cell.Print("Dilding ");
                 BuildQueue.Remove(cell);
                 SetCell(cell.x, cell.y, cell.Tile.ID, cell.FlipX, cell.FlipY, cell.Transpose, cell.AutotileCoordinate);
+                UpdateBitmaskArea(cell.Coordinate);
+
+                //SFX.Position = MapToWorld(cell.Coordinate);
+                //SFX.Play();
+                Global.SFX.Play(Sample.BB_Build, ToGlobal(MapToWorld(cell.Coordinate)));
+
                 if (BuildQueue.Count == 0)
                 {
                     HullEvent?.Invoke(this, new HullEventArgs(HullAction.CompleteBuild));

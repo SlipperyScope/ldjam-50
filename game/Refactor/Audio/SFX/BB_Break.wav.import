@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BB_Break.wav-261c0a56f2111afa4e3e9b1f67465091.sample"
+
+[deps]
+
+source_file="res://Refactor/Audio/SFX/BB_Break.wav"
+dest_files=[ "res://.import/BB_Break.wav-261c0a56f2111afa4e3e9b1f67465091.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

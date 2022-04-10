@@ -1,4 +1,5 @@
 using Godot;
+using ldjam50;
 using System;
 
 public class ShakeCam : Camera2D
@@ -14,6 +15,7 @@ public class ShakeCam : Camera2D
 
     public override void _Ready() 
     {
+        Global.Camera = this;
         Noise.Seed = (int)GD.Randi();
         Noise.Period = 4;
         Noise.Octaves = 2;
