@@ -45,17 +45,29 @@ namespace ldjam50
             }
 
             public UInt64 Ticket { get; private set; }
-            public Single Created { get; set; }
-            public Single Time { get; set; }
-            public Single Interval { get; set; }
-            public Int32 RemainingCalls { get; set; }
+            public UInt64 Created { get; set; }
+            public UInt64 Time { get; set; }
+            public UInt64 Interval { get; set; }
+            public UInt32 RemainingCalls { get; set; }
             public NotifyCallback Callback { get; set; }
         }
 
         /// <summary>
         /// Number of seconds since game start
         /// </summary>
-        public Single Seconds { get; private set; }
+        public Single Seconds => Milliseconds / 1000f;
+
+        /// <summary>
+        /// Number of milliseconds since game start
+        /// </summary>
+        public UInt64 Milliseconds => OS.GetTicksMsec();
+
+        /// <summary>
+        /// Converts seconds to milliseconds
+        /// </summary>
+        /// <param name="seconds">Seconds</param>
+        /// <returns>Milliseconds</returns>
+        private static UInt64 ToMsec(Single seconds) => (UInt64)(seconds * 1000);
 
         private List<Notify> Notifies => _Notifies ??= new List<Notify>();
         private List<Notify> _Notifies;
@@ -78,7 +90,7 @@ namespace ldjam50
         /// <param name="count">Number of notifications</param>
         /// <param name="callback">Notification callback</param>
         /// <returns>Ticket</returns>
-        public UInt64 AddRecurring(Single interval, Int32 count, NotifyCallback callback) => AddRecurring(interval, interval, count, callback);
+        public UInt64 AddRecurring(Single interval, UInt32 count, NotifyCallback callback) => AddRecurring(interval, interval, count, callback);
 
         /// <summary>
         /// Adds a recurring notifier
@@ -88,7 +100,7 @@ namespace ldjam50
         /// <param name="count">Number of notifications</param>
         /// <param name="callback">Notification callback</param>
         /// <returns>Ticket</returns>
-        public UInt64 AddRecurring(Single delay, Single interval, Int32 count, NotifyCallback callback)
+        public UInt64 AddRecurring(Single delay, Single interval, UInt32 count, NotifyCallback callback)
         {
             if (count < 1) throw new GDErrException("Count must be greater than 0");
             if (interval < 0) throw new GDErrException("Interval must be 0 or greater");
@@ -111,19 +123,20 @@ namespace ldjam50
         /// <param name="interval">Time between notifications</param>
         /// <param name="callback">Notification callback</param>
         /// <returns>Ticket</returns>
-        public UInt64 AddLooping(Single delay, Single interval, NotifyCallback callback) => AddNotify(delay, interval, Int32.MaxValue, callback);
+        public UInt64 AddLooping(Single delay, Single interval, NotifyCallback callback) => AddNotify(delay, interval, UInt32.MaxValue, callback);
 
         /// <summary>
         /// Adds a notify
         /// </summary>
         /// <returns>Ticket</returns>
-        private UInt64 AddNotify(Single delay, Single interval, Int32 count, NotifyCallback callback)
+        private UInt64 AddNotify(Single delay, Single interval, UInt32 count, NotifyCallback callback)
         {
             var ticket = Ticket.Next;
             var notify = new Notify(ticket)
             {
-                Time = Seconds + delay,
-                Interval = interval,
+                Created = Milliseconds,
+                Time = Milliseconds + ToMsec(delay),
+                Interval = ToMsec(interval),
                 RemainingCalls = count,
                 Callback = callback
             };
@@ -153,7 +166,7 @@ namespace ldjam50
         {
             var notify = Notifies.First(n => n.Ticket == ticket);
             Notifies.Remove(notify);
-            Notifies.Add(notify with { Time = Seconds });
+            Notifies.Add(notify with { Time = Milliseconds });
         }
 
         /// <summary>
@@ -190,9 +203,7 @@ namespace ldjam50
         /// </summary>
         public override void _Process(Single delta)
         {
-            Seconds += delta;
-
-            foreach( var notify in Notifies.Where(n => Seconds >= n.Time).ToList())
+            foreach( var notify in Notifies.Where(n => Milliseconds >= n.Time).ToList())
             {
                 notify.Callback();
 

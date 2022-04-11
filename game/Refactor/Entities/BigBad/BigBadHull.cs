@@ -68,7 +68,7 @@ namespace ldjam50.Refactor.Entities.BigBad
             cells.Where(c => c.Tile.Name != "Core").ToList().Shuffled().ForEach(c => BuildQueue.Add(c));
 
             HullEvent?.Invoke(this, new HullEventArgs(HullAction.StartBuild));
-            Global.Time.AddRecurring(0f, 0.05f, BuildQueue.Count, BuildNext);
+            Global.Time.AddRecurring(0f, 0.05f, (UInt32)BuildQueue.Count, BuildNext);
         }
 
         /// <summary>
