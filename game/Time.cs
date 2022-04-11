@@ -69,8 +69,10 @@ namespace ldjam50
         /// <returns>Milliseconds</returns>
         private static UInt64 ToMsec(Single seconds) => (UInt64)(seconds * 1000);
 
-        private List<Notify> Notifies => _Notifies ??= new List<Notify>();
-        private List<Notify> _Notifies;
+        /// <summary>
+        /// List of all notifies (duh)
+        /// </summary>
+        private readonly List<Notify> Notifies = new();
 
         /// <summary>
         /// Adds a one-shot notifier
@@ -140,8 +142,22 @@ namespace ldjam50
                 RemainingCalls = count,
                 Callback = callback
             };
-            Notifies.Add(notify);
+            //Notifies.Add(notify);
+            InsertNotify(notify);
             return ticket;
+        }
+
+        /// <summary>
+        /// Inserts notify, keeping order
+        /// </summary>
+        /// <param name="notify">Notify to add</param>
+        private void InsertNotify(Notify notify)
+        {
+            var time = notify.Time;
+            
+            if (Notifies.Count == 0 || Notifies.Last().Time <= time) Notifies.Add(notify);
+            else if (Notifies[0].Time > time) Notifies.Prepend(notify);
+            else Notifies.Insert(Notifies.FindIndex(n => n.Time >= time), notify);
         }
 
         /// <summary>
@@ -198,23 +214,26 @@ namespace ldjam50
             }
         }
 
+        public override void _Process(Single delta) => ProcessNotifies();
+        public override void _PhysicsProcess(Single delta) => ProcessNotifies();
+        
         /// <summary>
-        /// Process
+        /// Runs callbacks
         /// </summary>
-        public override void _Process(Single delta)
+        private void ProcessNotifies()
         {
-            foreach( var notify in Notifies.Where(n => Milliseconds >= n.Time).ToList())
+            foreach (var notify in Notifies.TakeWhile(n => n.Time <= Milliseconds).ToList())
             {
                 notify.Callback();
-
-                if (notify.RemainingCalls <= 1)
+                
+                if (notify.RemainingCalls is 1 or 0)
                 {
                     RemoveNotify(notify);
                 }
                 else
                 {
                     Notifies.Remove(notify);
-                    Notifies.Add(notify with { RemainingCalls = notify.RemainingCalls - 1, Time = notify.Time + notify.Interval });
+                    InsertNotify(notify with { RemainingCalls = notify.RemainingCalls - 1, Time = notify.Time + notify.Interval });
                 }
             }
         }
