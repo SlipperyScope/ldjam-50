@@ -27,10 +27,6 @@ namespace ldjam50.Refactor.Entities.BigBad
         [Export]
         private Int32 CoreHP = 3;
 
-        private AudioStreamPlayer2D SFX => _SFX ??= this.GetChild<AudioStreamPlayer2D>();
-        private AudioStreamPlayer2D _SFX;
-
-        //private readonly List<Cell> PendingBuild = new();
         private readonly List<Cell> BuildQueue = new();
 
         /// <summary>
@@ -68,7 +64,7 @@ namespace ldjam50.Refactor.Entities.BigBad
             cells.Where(c => c.Tile.Name != "Core").ToList().Shuffled().ForEach(c => BuildQueue.Add(c));
 
             HullEvent?.Invoke(this, new HullEventArgs(HullAction.StartBuild));
-            Global.Time.AddRecurring(0f, 0.05f, (UInt32)BuildQueue.Count, BuildNext);
+            Global.Time.AddRecurring(0f, 0.01f, (UInt32)BuildQueue.Count, BuildNext);
         }
 
         /// <summary>
@@ -84,13 +80,10 @@ namespace ldjam50.Refactor.Entities.BigBad
             }
             else
             {
-                //cell.Print("Dilding ");
                 BuildQueue.Remove(cell);
                 SetCell(cell.x, cell.y, cell.Tile.ID, cell.FlipX, cell.FlipY, cell.Transpose, cell.AutotileCoordinate);
                 UpdateBitmaskArea(cell.Coordinate);
 
-                //SFX.Position = MapToWorld(cell.Coordinate);
-                //SFX.Play();
                 Global.SFX.Play(Sample.BB_Build, ToGlobal(MapToWorld(cell.Coordinate)));
 
                 if (BuildQueue.Count == 0)
@@ -103,6 +96,9 @@ namespace ldjam50.Refactor.Entities.BigBad
 
     public delegate void HullEventHandler(object sender, HullEventArgs e);
 
+    /// <summary>
+    /// Arguments for a hull event
+    /// </summary>
     public class HullEventArgs : EventArgs
     {
         public HullEventArgs(HullAction hullAction)
@@ -113,6 +109,9 @@ namespace ldjam50.Refactor.Entities.BigBad
         public HullAction HullAction { get; set; }
     }
 
+    /// <summary>
+    /// Hull Action
+    /// </summary>
     public enum HullAction
     {
         StartBuild,

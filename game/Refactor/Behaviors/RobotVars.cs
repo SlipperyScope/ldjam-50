@@ -27,8 +27,8 @@ namespace ldjam50.Refactor.Behaviors
         /// </summary>
         /// <param name="name">Name of var</param>
         /// <returns>Var</returns>
-        /// <exception cref="RobotVarNotFound">Var does not exist</exception>
-        public System.Object Read(String name) => vars.ContainsKey(name) ? vars[name] : throw new RobotVarNotFound($"{name} not found");
+        /// <exception cref="RobotVarNotFoundException">Var does not exist</exception>
+        public System.Object Read(String name) => vars.ContainsKey(name) ? vars[name] : throw new RobotVarNotFoundException($"{name} not found");
 
         /// <summary>
         /// Returns <paramref name="name"/> as <typeparamref name="T"/>
@@ -36,8 +36,8 @@ namespace ldjam50.Refactor.Behaviors
         /// <typeparam name="T">Type of var</typeparam>
         /// <param name="name">Name of var</param>
         /// <returns>Var as <typeparamref name="T"/></returns>
-        /// <exception cref="RobotValueInvalidCast">Var exists but is not <typeparamref name="T"/></exception>
-        public T Read<T>(String name) => vars.ContainsKey(name) && vars[name] is T t ? t : throw new RobotValueInvalidCast($"Cannot cast {vars[name].GetType()} {name} to {typeof(T)}");
+        /// <exception cref="RobotValueInvalidCastException">Var exists but is not <typeparamref name="T"/></exception>
+        public T Read<T>(String name) => vars.ContainsKey(name) && vars[name] is T t ? t : throw new RobotValueInvalidCastException($"Cannot cast {vars[name].GetType()} {name} to {typeof(T)}");
 
         /// <summary>
         /// Sets <paramref name="value"/> to <paramref name="value"/> as <typeparamref name="T"/> or default, returns if read was successful
@@ -66,7 +66,7 @@ namespace ldjam50.Refactor.Behaviors
         /// </summary>
         /// <param name="name">Name of var</param>
         /// <param name="value">New value</param>
-        /// <exception cref="RobotVarNotFound">No var named <paramref name="value"/></exception>
+        /// <exception cref="RobotVarNotFoundException">No var named <paramref name="value"/></exception>
         public void Write(String name, System.Object value)
         {
             if (vars.ContainsKey(name))
@@ -75,7 +75,7 @@ namespace ldjam50.Refactor.Behaviors
             }
             else
             {
-                throw new RobotVarNotFound($"{name} not found");
+                throw new RobotVarNotFoundException($"{name} not found");
             }
         }
 

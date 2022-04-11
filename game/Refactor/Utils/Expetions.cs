@@ -67,22 +67,30 @@ namespace ldjam50.Refactor.Utils
     /// <summary>
     /// Indicates a value in robot vars does not exist
     /// </summary>
-    public class RobotVarNotFound : GDErrException
+    public class RobotVarNotFoundException : GDErrException
     {
-        public RobotVarNotFound(String message)
+        public RobotVarNotFoundException(String message)
         {
-            GD.PrintErr($"{nameof(RobotVarNotFound)}: {message}");
+            GD.PrintErr($"{nameof(RobotVarNotFoundException)}: {message}");
         }
     }
 
     /// <summary>
     /// Indicates a value in robot vars could not be cast
     /// </summary>
-    public class RobotValueInvalidCast : GDErrException
+    public class RobotValueInvalidCastException : GDErrException
     {
-        public RobotValueInvalidCast(String message)
+        public RobotValueInvalidCastException(String message)
         {
-            GD.PrintErr($"{nameof(RobotValueInvalidCast)}: {message}");
+            GD.PrintErr($"{nameof(RobotValueInvalidCastException)}: {message}");
+        }
+    }
+
+    public class NullArgumentException : GDErrException
+    {
+        public NullArgumentException(String message)
+        {
+            GD.PrintErr($"{nameof(NullArgumentException)}: {message}");
         }
     }
 }

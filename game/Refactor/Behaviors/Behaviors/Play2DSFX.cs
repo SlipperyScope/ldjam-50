@@ -25,7 +25,7 @@ namespace ldjam50.Refactor.Behaviors.Behaviors
         //private AudioStream SFX;
 
         [Export]
-        private Sample SFX;
+        private readonly Sample SFX;
         
         public override void Execute(IRobot robot)
         {
